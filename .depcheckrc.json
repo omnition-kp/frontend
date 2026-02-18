@@ -1,0 +1,19 @@
+{
+    "ignores": [
+        "@commitlint/cli",
+        "@commitlint/config-conventional",
+        "@tailwindcss/postcss",
+        "@types/node",
+        "@types/react",
+        "@types/react-dom",
+        "babel-plugin-react-compiler",
+        "depcheck",
+        "eslint-config-next",
+        "eslint-config-prettier",
+        "husky",
+        "lint-staged",
+        "tailwindcss",
+        "typescript"
+    ],
+    "ignore-patterns": [".next", "node_modules", "dist", "build"]
+}
