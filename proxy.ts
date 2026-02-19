@@ -2,6 +2,11 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { LOGIN_ROUTE, ADMIN_ONLY_PATHS } from "@/shared/config";
 
+/**
+ * Next.js 16+: конвенция middleware переименована в proxy.
+ * Файл proxy.ts в корне, экспорт функции proxy — см.
+ * https://nextjs.org/docs/app/api-reference/file-conventions/proxy
+ */
 export async function proxy(request: NextRequest) {
     const { pathname } = request.nextUrl;
     const token = request.cookies.get("accessToken")?.value;
@@ -13,7 +18,7 @@ export async function proxy(request: NextRequest) {
     const isLoginPage = normalizedPath === LOGIN_ROUTE;
     const isAdminSection = normalizedPath.startsWith("/admin");
 
-    // С токеном на странице входа — редирект в админку
+    // С токеном на странице входа — редирект в админку (общая страница /admin)
     if (isLoginPage && token) {
         return NextResponse.redirect(new URL("/admin", request.url));
     }
@@ -45,7 +50,7 @@ export async function proxy(request: NextRequest) {
 
             const profile = (await response.json()) as { role: string };
 
-            // Маршруты только для админов: модераторам — редирект в админку
+            // /admin/admin — только для роли ADMIN; модераторам — редирект на /admin
             const isAdminOnlyRoute = ADMIN_ONLY_PATHS.some((path) =>
                 normalizedPath.startsWith(path),
             );

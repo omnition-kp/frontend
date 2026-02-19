@@ -1,22 +1,26 @@
 "use client";
 
-import { useForm } from "react-hook-form";
+import { useForm, type SubmitHandler } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import { AxiosError } from "axios";
 import { AdminHeadlineForm } from "@/shared/admin";
 import { AdminButton } from "@/shared/admin/ui/admin-button";
 import { AdminInput } from "@/shared/admin/ui/admin-input";
 import { useState } from "react";
 import { AdminError } from "@/shared/admin/ui/admin-error";
+import { sendAuth, getTokenFromResponse } from "../api/send-auth";
+import { setAuthCookie } from "../actions/auth.actions";
 
 import type { AuthFormValues } from "../types/auth-form-values";
 
 export const AdminAuth = () => {
-    const [loading, setLoading] = useState<boolean>(false);
+    const router = useRouter();
     const [error, setError] = useState<string | null>(null);
 
     const {
         register,
         handleSubmit,
-        formState: { errors },
+        formState: { errors, isSubmitting },
     } = useForm<AuthFormValues>({
         defaultValues: {
             email: "",
@@ -24,16 +28,53 @@ export const AdminAuth = () => {
         },
     });
 
-    const onSubmit = (data: AuthFormValues) => {
-        setLoading(true);
+    const onSubmit: SubmitHandler<AuthFormValues> = async (data) => {
         setError(null);
-        console.log(data);
+        try {
+            const response = await sendAuth(data);
+            const token = getTokenFromResponse(response);
+
+            if (!token) {
+                throw new Error("Токен не получен от сервера");
+            }
+
+            const cookieResult = await setAuthCookie(token);
+
+            if (!cookieResult?.success) {
+                setError(cookieResult?.error ?? "Ошибка сохранения сессии");
+                throw new Error(
+                    cookieResult?.error ?? "Ошибка сохранения сессии",
+                );
+            }
+
+            router.push("/admin");
+        } catch (err) {
+            let errorMessage = "Произошла неизвестная ошибка";
+
+            if (err instanceof AxiosError) {
+                const backendMessage = err.response?.data?.message;
+                if (Array.isArray(backendMessage)) {
+                    errorMessage = backendMessage[0];
+                } else if (typeof backendMessage === "string") {
+                    errorMessage = backendMessage;
+                } else {
+                    errorMessage =
+                        err.response?.status === 401
+                            ? "Неверный email или пароль"
+                            : "Ошибка сервера. Попробуйте позже.";
+                }
+            } else if (err instanceof Error) {
+                errorMessage = err.message;
+            }
+
+            setError(errorMessage);
+        }
     };
 
     return (
         <div className="w-full min-h-screen flex items-center justify-center">
             <form
-                className="p-7.5 bg-[#F9F9F9] rounded-[4px] min-w-[400px]"
+                className="p-7.5 bg-[#F9F9F9] rounded-[4px] w-[400px]"
                 onSubmit={(e) => {
                     e.preventDefault();
                     void handleSubmit(onSubmit)(e);
@@ -51,6 +92,7 @@ export const AdminAuth = () => {
                         placeholder="Email"
                         autoComplete="email"
                         type="email"
+                        disabled={isSubmitting}
                         {...register("email", {
                             required: "Введите email",
                             pattern: {
@@ -65,6 +107,7 @@ export const AdminAuth = () => {
                         placeholder="Пароль"
                         type="password"
                         autoComplete="current-password"
+                        disabled={isSubmitting}
                         {...register("password", {
                             required: "Введите пароль",
                         })}
@@ -75,7 +118,7 @@ export const AdminAuth = () => {
                 <AdminButton
                     type="submit"
                     className="w-full py-3"
-                    loading={loading}
+                    loading={isSubmitting}
                 >
                     Войти
                 </AdminButton>
