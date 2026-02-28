@@ -6,7 +6,7 @@ import {
     useMemo,
     useRef,
     useState,
-    type MouseEvent,
+    type MouseEvent as ReactMouseEvent,
 } from "react";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
@@ -79,7 +79,7 @@ export const AdminSelect = ({
 
         const close = () => closeDropdown();
 
-        const handleOutsideClick = (event: MouseEvent) => {
+        const handleOutsideClick = (event: globalThis.MouseEvent) => {
             const target = event.target as Node;
 
             if (
@@ -139,7 +139,7 @@ export const AdminSelect = ({
         });
     }, [options, searchQuery]);
 
-    const handleClearValue = (event: MouseEvent<HTMLDivElement>) => {
+    const handleClearValue = (event: ReactMouseEvent<HTMLDivElement>) => {
         event.stopPropagation();
         onChange(null);
     };

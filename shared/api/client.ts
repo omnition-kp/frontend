@@ -19,7 +19,7 @@ const normalizeHeaders = (
 
 export const customInstance = <T>(
     urlOrConfig: string | AxiosRequestConfig,
-    options?: RequestInit | AxiosRequestConfig,
+    options?: RequestInit,
 ): Promise<T> => {
     const config: AxiosRequestConfig =
         typeof urlOrConfig === "string"

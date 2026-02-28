@@ -84,18 +84,14 @@ export const AdminKpForm = ({ type, id, clientId }: AdminKpFormProps) => {
     const { mutateAsync: uploadEstimate, isPending: uploadEstimatePending } =
         useKpControllerUploadEstimate({
             request: {
-                headers: {
-                    "Content-Type": undefined,
-                } as Record<string, string | undefined>,
+                headers: {},
             },
         });
 
     const { mutateAsync: uploadDocuments, isPending: uploadDocsPending } =
         useKpControllerUploadDocuments({
             request: {
-                headers: {
-                    "Content-Type": undefined,
-                } as Record<string, string | undefined>,
+                headers: {},
             },
         });
 

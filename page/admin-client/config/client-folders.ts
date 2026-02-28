@@ -8,8 +8,12 @@ export const CLIENT_FOLDERS: ClientFolder[] = [
         name: "Клиент 1",
         cpCount: 2,
         offers: [
-            { id: "2-1", title: "УСТРОЙСТВО МОНОЛИТНЫХ ДЕКОРАТИВНЫХ ПОЛОВ" },
-            { id: "2-2", title: "ЛЕСТНИЦЫ" },
+            {
+                id: "2-1",
+                title: "УСТРОЙСТВО МОНОЛИТНЫХ ДЕКОРАТИВНЫХ ПОЛОВ",
+                numberKp: "2-1",
+            },
+            { id: "2-2", title: "ЛЕСТНИЦЫ", numberKp: "2-2" },
         ],
     },
     { id: "3", numberLabel: "№1", name: "Клиент 1", cpCount: 2, offers: [] },
