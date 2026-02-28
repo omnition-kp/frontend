@@ -7,13 +7,17 @@ import { PADDING_X_CLASS } from "@/shared/config";
 export const Documents = ({ documents }: DocumentsProps) => {
     return (
         <div className={cn(PADDING_X_CLASS)}>
-            <Headline className="mb-7.5 text-[#4C4C4C]">Документы</Headline>
+            <Headline className="lg:mb-7.5 mob:mb-10 mb-6 text-[#4C4C4C] text-[24px] lg:text-[30px] mob:text-[34px]">
+                Документы
+            </Headline>
 
             <div
-                className="grid gap-5"
-                style={{
-                    gridTemplateColumns: `repeat(${documents.length}, 1fr)`,
-                }}
+                className="grid grid-cols-1 gap-5 lg:grid-cols-[repeat(var(--docs-count),1fr)]"
+                style={
+                    {
+                        ["--docs-count" as string]: documents.length,
+                    } as React.CSSProperties
+                }
             >
                 {documents.map((document) => (
                     <Document key={document.path} {...document} />

@@ -11,47 +11,64 @@ export const FillingBlockTemplate = ({
     logisticMaterial,
     photo,
 }: FillingBlockTemplateProps) => {
-    return (
-        <div className="flex items-center justify-between w-full gap-4">
-            <div className="">
-                <Headline className="text-white mb-5">{title}</Headline>
+    const textContent = (
+        <>
+            <Headline className="text-white mb-5 lg:text-[56px] mob:text-[30px] text-[20px]">
+                {title}
+            </Headline>
 
-                <div className="flex flex-col items-start gap-0.5 mb-6">
-                    <MainText className="text-white/60">
-                        Производительность в смену
-                    </MainText>
-                    <Headline variant="4" className="text-white">
-                        {productivityPerShift} м3
-                    </Headline>
-                </div>
-
-                <div className="flex flex-col items-start gap-0.5 mb-6">
-                    <MainText className="text-white/60">
-                        Логистика материала
-                    </MainText>
-                    <Headline variant="4" className="text-white">
-                        {logisticMaterial}
-                    </Headline>
-                </div>
-
-                <p
-                    className={cn(
-                        gtWalsheim.className,
-                        "text-white text-[22px] leading-[120%] tracking-normal",
-                    )}
+            <div className="flex flex-col items-start gap-0.5 mb-6">
+                <MainText className="text-white/60 lg:text-[22px] mob:text-[16px] text-[14px]">
+                    Производительность в смену
+                </MainText>
+                <Headline
+                    variant="4"
+                    className="text-white lg:text-[30px] mob:text-[18px] text-[16px]"
                 >
-                    {description}
-                </p>
+                    {productivityPerShift} м3
+                </Headline>
             </div>
 
-            <Image
-                src={photo}
-                alt={title}
-                width={655}
-                height={388}
-                className="h-full w-auto"
-                unoptimized
-            />
+            <div className="flex flex-col items-start gap-0.5 mb-6">
+                <MainText className="text-white/60 lg:text-[22px] mob:text-[16px] text-[14px]">
+                    Логистика материала
+                </MainText>
+                <Headline
+                    variant="4"
+                    className="text-white lg:text-[30px] mob:text-[18px] text-[16px]"
+                >
+                    {logisticMaterial}
+                </Headline>
+            </div>
+
+            <p
+                className={cn(
+                    gtWalsheim.className,
+                    "text-white lg:text-[22px] mob:text-[18px] text-[16px] leading-[120%] tracking-normal",
+                )}
+            >
+                {description}
+            </p>
+        </>
+    );
+
+    return (
+        <div className="flex flex-col lg:flex-row items-center justify-between w-full gap-1 lg:gap-4">
+            {/* На мобиле: фото сверху (order-1), блок текста снизу (order-2). На десктопе: текст слева, фото справа */}
+            <div className="order-2 lg:order-1 w-full lg:flex-1 bg-gray lg:bg-transparent px-3 py-4 lg:px-0 lg:py-0 mt-1 lg:mt-0 shrink-0">
+                {textContent}
+            </div>
+
+            <div className="order-1 lg:order-2 w-full lg:w-auto overflow-hidden shrink-0">
+                <Image
+                    src={photo}
+                    alt={title}
+                    width={655}
+                    height={388}
+                    className="h-full w-full lg:w-auto object-cover"
+                    unoptimized
+                />
+            </div>
         </div>
     );
 };

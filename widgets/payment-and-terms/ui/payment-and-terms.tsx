@@ -7,17 +7,18 @@ import { ParallelFlow } from "./parallel-flow";
 export const PaymentAndTerms = ({ data }: PaymentAndTermsProps) => {
     return (
         <section className={cn(PADDING_X_CLASS)}>
-            <Headline className="text-gray mb-10">
+            <Headline className="text-gray mob:mb-10 mb-6 lg:text-[56px] mob:text-[34px] text-[24px]">
                 Оплата и сроки работ
             </Headline>
 
-            <div className="grid grid-cols-2 gap-x-7.5 gap-y-3 mb-12">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-7.5 lg:gap-y-3 mob:gap-y-4 gap-y-2 mb-12">
                 {data.map((item, index) => (
                     <DotText key={index} title={item} />
                 ))}
             </div>
-
-            <ParallelFlow />
+            <div className="mt-8 lg:mt-0">
+                <ParallelFlow />
+            </div>
         </section>
     );
 };

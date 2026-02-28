@@ -8,13 +8,16 @@ import { downloadImage } from "../utils/download-image";
 export const NodeDesign = ({ photo }: NodeDesignProps) => {
     return (
         <section className={cn(PADDING_X_CLASS)}>
-            <div className="flex items-center justify-between mb-11.5">
-                <Headline className="text-gray">
+            <div className="flex lg:flex-row flex-col items-center justify-between lg:mb-11.5 mob:mb-10 mb-6">
+                <Headline className="text-gray lg:mb-0 mob:mb-10 mb-6 lg:text-[56px] mob:text-[34px] text-[24px]">
                     Вариация конструкции УЗЛОВ продуктов
                 </Headline>
 
-                <div className="flex flex-col items-start gap-5 max-w-[523px]">
-                    <MainText variant="2">
+                <div className="flex flex-col items-start lg:gap-5 mob:gap-7 gap-4.5 lg:max-w-[523px]">
+                    <MainText
+                        variant="2"
+                        className="lg:text-[20px] mob:text-[20px] text-[14px]"
+                    >
                         Интегрируемся в любые проекты: предложим варианты
                         оптимизации уже спроектированных подпорных стен
                         для снижения издержек при эксплуатации.

@@ -24,8 +24,11 @@ export const SurfaceBlock = ({ title, photo, data }: SurfaceBlockProps) => {
                 <div className={LINE_CLASS.top} />
                 <div className={LINE_CLASS.bottom} />
 
-                <div className="absolute top-8.5 right-8.5 bg-white/70 backdrop-blur-[15.6px] py-4 px-7.5">
-                    <Headline variant="4" className="text-gray">
+                <div className="absolute lg:top-8.5 top-5.5 lg:right-8.5 right-5.5 bg-white/70 backdrop-blur-[15.6px] lg:py-4 py-2.5 lg:px-7.5 px-4.5">
+                    <Headline
+                        variant="4"
+                        className="text-gray lg:text-[30px] text-[14px]"
+                    >
                         {title}
                     </Headline>
                 </div>

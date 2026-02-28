@@ -2,13 +2,22 @@ import { NumberText } from "@/shared/ui";
 import { AdvantageBlockProps } from "../types/advantage-block.props";
 import { ThermomentrIcon } from "../icons/icons";
 import Image from "next/image";
+import { cn } from "@/shared/utils";
+
+const adaptation_class_for_number =
+    "lg:text-[80px] mob:text-[60px] text-[55px]";
 
 export const ADVANTAGES: AdvantageBlockProps[] = [
     {
         title: "Натуральность",
         description:
             "Выбросов CO₂, что меньше цемента и электроэнергии. За счет формулы смеси OMNITON подходит для зелёных стандартов BREEAM, LEED",
-        children: <NumberText title="-40%" className="text-gray" />,
+        children: (
+            <NumberText
+                title="-40%"
+                className={cn("text-gray", adaptation_class_for_number)}
+            />
+        ),
         icon: "/advantages-of-conrete/icon.png",
         leftBorder: true,
         rightBorder: true,
@@ -19,7 +28,12 @@ export const ADVANTAGES: AdvantageBlockProps[] = [
         title: "Высокая прочность (B50)",
         description:
             "Имеет подтвержденный опыт по созданию специализированных высокопробных бетонов",
-        children: <NumberText title="B40-B100" className="text-gray" />,
+        children: (
+            <NumberText
+                title="B40-B100"
+                className={cn("text-gray", adaptation_class_for_number)}
+            />
+        ),
         leftBorder: false,
         rightBorder: true,
         topBorder: true,
@@ -29,7 +43,12 @@ export const ADVANTAGES: AdvantageBlockProps[] = [
         title: "ИЗНОСОСТОЙКОСТЬ И РЕНОВИРУЕМОСТь",
         description:
             "Имеет подтвержденный опыт по созданию специализированных высокопробных бетонов",
-        children: <NumberText title="до 50 лет" className="text-gray" />,
+        children: (
+            <NumberText
+                title="до 50 лет"
+                className={cn("text-gray", adaptation_class_for_number)}
+            />
+        ),
         leftBorder: false,
         rightBorder: true,
         topBorder: true,
@@ -67,7 +86,12 @@ export const ADVANTAGES: AdvantageBlockProps[] = [
         title: "ТЕХНОЛОГИЯ МНОГОКОМПОНЕНТНОСТИ",
         description:
             "КОМПОНЕНТОВ формула дает тот результат по составу, прочности, внешнему виду, который нужен",
-        children: <NumberText title="<12" className="text-gray" />,
+        children: (
+            <NumberText
+                title="<12"
+                className={cn("text-gray", adaptation_class_for_number)}
+            />
+        ),
         leftBorder: false,
         rightBorder: true,
         bottomBorder: true,

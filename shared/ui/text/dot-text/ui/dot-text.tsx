@@ -8,7 +8,9 @@ export const DotText = ({ title, className }: DotTextProps) => {
         <div className={cn("flex items-start gap-4", className)}>
             <DotIcon className="mt-1.5 shrink-0" />
 
-            <MainText>{title}</MainText>
+            <MainText className="lg:text-[22px] mob:text-[20px] text-[14px]">
+                {title}
+            </MainText>
         </div>
     );
 };

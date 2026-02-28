@@ -6,6 +6,7 @@ import { gtWalsheim } from "@/shared/config";
 export const FooterDocumentLink = ({
     link,
     title,
+    variant = "default",
 }: FooterDocumentLinkProps) => {
     return (
         <Link
@@ -13,7 +14,8 @@ export const FooterDocumentLink = ({
             target="_blank"
             className={cn(
                 gtWalsheim.className,
-                "text-[#B0B0B0] font-medium transition duration-300 ease-in-out hover:text-white cursor-pointer",
+                "font-medium transition duration-300 ease-in-out hover:text-white cursor-pointer",
+                variant === "mobile" ? "text-[#6B6B6B]" : "text-[#B0B0B0]",
             )}
         >
             {title}

@@ -8,8 +8,8 @@ export const InteriorTemplate = ({
     children,
 }: InteriorTemplateProps) => {
     return (
-        <div className="w-full flex items-center gap-10">
-            <div className="w-[30%] aspect-square">
+        <div className="w-full flex flex-col lg:flex-row items-center gap-1 lg:gap-10">
+            <div className="w-full lg:w-[30%] aspect-4/3 lg:aspect-square overflow-hidden shrink-0">
                 <Image
                     src={photo}
                     alt={title}
@@ -21,8 +21,10 @@ export const InteriorTemplate = ({
                 />
             </div>
 
-            <div className="w-[70%]">
-                <Headline className="text-white mb-5">{title}</Headline>
+            <div className="lg:w-[70%] bg-[#919191] py-4 px-3 lg:py-0 lg:px-0">
+                <Headline className="text-white lg:mb-5 mb-4 lg:text-[56px] mob:text-[30px] text-[20px]">
+                    {title}
+                </Headline>
 
                 {children}
             </div>

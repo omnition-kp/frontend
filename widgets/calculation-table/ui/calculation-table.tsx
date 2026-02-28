@@ -34,19 +34,22 @@ export function CalculationTable({
 
     return (
         <section className={cn(PADDING_X_CLASS)}>
-            <div className="flex items-start justify-between gap-1 mb-13">
-                <Headline>
+            <div className="flex lg:flex-row flex-col items-start justify-between gap-1 lg:mb-13 mob:mb-10 mb-6">
+                <Headline className="lg:text-[56px] mob:text-[34px] text-[24px]">
                     <span className="text-[#4C4C4C]">{name.split(" ")[0]}</span>{" "}
                     {name.split(" ").slice(1).join(" ")}
                 </Headline>
-                <Headline variant="2" className="text-[#4C4C4C]">
+                <Headline
+                    variant="2"
+                    className="text-[#4C4C4C] lg:text-[50px] text-[34px] hidden mob:block"
+                >
                     №{id} от {date}
                 </Headline>
             </div>
 
             {data && (
-                <div className="border-t border-b border-[#919191] overflow-hidden">
-                    <table className="w-full table-fixed border-collapse">
+                <div className="border-t border-b border-[#919191] overflow-x-auto lg:overflow-hidden">
+                    <table className="w-full table-fixed border-collapse min-w-[1440px] lg:min-w-0">
                         <CalculationTableHeader />
                         <tbody>
                             {data.sections.map((section, index) => (
@@ -59,13 +62,11 @@ export function CalculationTable({
                             ))}
                         </tbody>
                     </table>
-                    <div className="h-3 bg-[#D6D6D6]" aria-hidden />
                     <CalculationTableSummary data={data} />
-                    <div className="h-3 bg-[#D6D6D6]" aria-hidden />
                 </div>
             )}
 
-            <div className="flex justify-end mt-6">
+            <div className="flex justify-end lg:mt-6 mob:mt-8 mt-6">
                 <Button>Скачать смету</Button>
             </div>
         </section>

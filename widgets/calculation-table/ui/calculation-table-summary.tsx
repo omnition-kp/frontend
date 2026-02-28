@@ -17,7 +17,7 @@ export function CalculationTableSummary({
 
     return (
         <div className="bg-[#D6D6D6]">
-            <table className="w-full table-fixed border-collapse">
+            <table className="w-full table-fixed border-collapse min-w-[1440px] lg:min-w-0">
                 <tbody>
                     {/* 9 колонок: №, Наименование (подписи во 2-й), Ед., Кол-во, ..., Итого раб., Итого всего */}
                     <tr className="border-b border-[#919191]">

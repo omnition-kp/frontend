@@ -25,17 +25,17 @@ export const CommercialProposal = ({
 
     return (
         <div className={cn(PADDING_X_CLASS)}>
-            <Headline className="text-gray mb-11.5">
+            <Headline className="text-gray mb-11.5 text-[22px] lg:text-[56px] mob:text-[34px]">
                 коммерческое предложение
                 <br />№{id} от {date}
             </Headline>
 
-            <div className="grid grid-cols-2 gap-4.5">
+            <div className="grid grid-cols-1 mob:grid-cols-2 gap-4.5">
                 {commerceArray.map((item, idx) => (
                     <CommercialProposalLine
                         key={idx}
                         {...item}
-                        className={idx === 0 ? "col-span-2" : ""}
+                        className={idx === 0 ? "mob:col-span-2" : ""}
                     />
                 ))}
             </div>

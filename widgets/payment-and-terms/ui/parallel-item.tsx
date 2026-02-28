@@ -32,7 +32,8 @@ export const ParallelItemBar = ({
     variant = "default",
     animationDelay,
     isInView = true,
-}: Pick<ParallelItemProps, "widthSquares" | "variant"> & {
+    icon,
+}: Pick<ParallelItemProps, "widthSquares" | "variant" | "icon"> & {
     animationDelay?: number;
     isInView?: boolean;
 }) => {
@@ -45,7 +46,7 @@ export const ParallelItemBar = ({
     return (
         <motion.div
             className={cn(
-                "shrink-0 origin-left",
+                "shrink-0 origin-left relative flex items-center justify-center",
                 variant === "default" && "bg-blue",
             )}
             style={{
@@ -57,6 +58,23 @@ export const ParallelItemBar = ({
             initial={{ scaleX: 0 }}
             animate={{ scaleX: isInView ? 1 : 0 }}
             transition={{ ...barTransition, delay }}
-        />
+        >
+            {icon && (
+                <span className="absolute inset-0 flex items-center justify-center lg:hidden pointer-events-none">
+                    <span
+                        className={cn(
+                            "flex items-center justify-center rounded-full bg-white shrink-0 w-[25px] h-[25px] [&_svg]:w-4 [&_svg]:h-4 [&_svg]:shrink-0 border",
+                            // Меняем только цвет у элементов, у которых уже есть fill или stroke (не добавляем заливку/обводку там, где их не было)
+                            variant === "default" &&
+                                "border-[#6eafff] text-[#6eafff] [&_*[fill]:not([fill='none'])]:fill-current [&_*[stroke]:not([stroke='none'])]:stroke-current",
+                            variant === "dark" &&
+                                "border-gray text-gray [&_*[fill]:not([fill='none'])]:fill-current [&_*[stroke]:not([stroke='none'])]:stroke-current",
+                        )}
+                    >
+                        {icon}
+                    </span>
+                </span>
+            )}
+        </motion.div>
     );
 };

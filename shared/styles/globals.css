@@ -8,4 +8,6 @@
 
     --color-violet1: #80829c;
     --color-violet2: #616471;
+
+    --breakpoint-mob: 31.25rem; /* 500px */
 }

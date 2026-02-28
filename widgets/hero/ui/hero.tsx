@@ -22,7 +22,7 @@ export const Hero = () => {
 
             {/* 2. ЛОГОТИП */}
             <div className={cn("w-full relative z-10 pt-8", PADDING_X_CLASS)}>
-                <div className="w-full flex justify-center">
+                <div className="w-full flex justify-center mb-8 mob:mb-0">
                     <div className="w-full max-w-[1440px]">
                         <Image
                             src="/logo.svg"
@@ -34,6 +34,17 @@ export const Hero = () => {
                         />
                     </div>
                 </div>
+
+                <Headline
+                    variant="2"
+                    className="uppercase text-white leading-none text-[20px] block mob:hidden"
+                >
+                    ВЫСОКОКАЧЕСТВЕННЫЙ
+                    <br />
+                    ЭНЕРГОЭФФЕКТИВНЫЙ
+                    <br />
+                    АРХИТЕКТУРНЫЙ БЕТОН
+                </Headline>
             </div>
 
             {/* 3. НИЖНЯЯ ЧАСТЬ */}
@@ -48,7 +59,7 @@ export const Hero = () => {
                     <div className="pb-6 md:pb-8 relative z-10 w-fit">
                         <Headline
                             variant="2"
-                            className="uppercase text-white leading-none"
+                            className="uppercase text-white leading-none text-[30px] lg:text-[50px] hidden mob:block"
                         >
                             ВЫСОКОКАЧЕСТВЕННЫЙ
                             <br />
@@ -64,7 +75,7 @@ export const Hero = () => {
                         {/* ================= ЛИНИИ ================= */}
 
                         {/* 1. Горизонтальная ЛЕВАЯ (до разрыва) — прорисовка слева направо */}
-                        <div className="absolute left-0 top-0 h-[2px] overflow-hidden right-[calc(10%+12px)] lg:right-[calc(15%+12px)]">
+                        <div className="absolute left-0 top-0 h-[2px] overflow-hidden right-[calc(10%+12px)] lg:right-[calc(15%+12px)] hidden lg:block">
                             <motion.div
                                 className="h-full w-full bg-white origin-left"
                                 initial={{ scaleX: 0 }}
@@ -77,7 +88,7 @@ export const Hero = () => {
                         </div>
 
                         {/* 2. Горизонтальная ПРАВАЯ (после разрыва) — прорисовка справа налево */}
-                        <div className="absolute right-0 top-0 h-[2px] overflow-hidden w-[calc(10%-12px)] lg:w-[calc(15%-12px)]">
+                        <div className="absolute right-0 top-0 h-[2px] overflow-hidden w-[calc(10%-12px)] lg:w-[calc(15%-12px)] hidden lg:block">
                             <motion.div
                                 className="h-full w-full bg-white origin-right"
                                 initial={{ scaleX: 0 }}
@@ -92,7 +103,7 @@ export const Hero = () => {
                         {/* 3. Вертикальная ВЕРХНЯЯ (торчит вверх) — прорисовка снизу вверх */}
                         <div
                             className={cn(
-                                "absolute w-[2px] h-32 md:h-56 overflow-hidden",
+                                "absolute w-[2px] h-32 md:h-56 overflow-hidden hidden lg:block",
                                 CROSS_POS_RIGHT,
                             )}
                             style={{ bottom: `calc(100% + ${GAP_Y})` }}
@@ -111,7 +122,7 @@ export const Hero = () => {
                         {/* 4. Вертикальная НИЖНЯЯ (ВНУТРИ БЛОКА) — прорисовка сверху вниз */}
                         <div
                             className={cn(
-                                "absolute w-[2px] bottom-0 overflow-hidden",
+                                "absolute w-[2px] bottom-0 overflow-hidden hidden lg:block",
                                 CROSS_POS_RIGHT,
                             )}
                             style={{ top: GAP_Y }}
@@ -129,10 +140,10 @@ export const Hero = () => {
 
                         {/* ================= КОНТЕНТ ================= */}
                         {/* pt-6 создает отступ текста от горизонтальной линии сверху */}
-                        <div className="flex flex-row w-full items-stretch pt-6">
+                        <div className="flex flex-col mob:flex-row w-full items-stretch pt-6">
                             {/* ЛЕВАЯ КОЛОНКА */}
-                            <div className="w-[38%] pr-4">
-                                <MainText className="text-white/80 max-w-[380px]">
+                            <div className="w-full mob:w-[38%] pr-4">
+                                <MainText className="text-white/80 w-full mob:max-w-[380px] text-[14px] lg:text-[22px] mob:text-[16px] border-t border-white py-5 mob:border-none mob:py-0">
                                     115162, г.Москва, Внутренний территориальный
                                     городской муниципальный округ Даниловский,
                                     ул.Шухова, д.17, корп.2
@@ -141,7 +152,7 @@ export const Hero = () => {
 
                             {/* ЦЕНТРАЛЬНЫЙ РАЗДЕЛИТЕЛЬ — прорисовка сверху вниз */}
                             <motion.div
-                                className="w-[2px] bg-white mt-2 origin-top"
+                                className="w-[2px] bg-white mt-2 origin-top hidden lg:block"
                                 initial={{ scaleY: 0 }}
                                 animate={{ scaleY: 1 }}
                                 transition={{
@@ -151,8 +162,8 @@ export const Hero = () => {
                             />
 
                             {/* ПРАВАЯ КОЛОНКА */}
-                            <div className="flex-1 pl-10">
-                                <MainText className="text-white/80 uppercase leading-relaxed">
+                            <div className="flex-1 pl-0 mob:pl-10">
+                                <MainText className="text-white/80 uppercase leading-relaxed text-[14px] lg:text-[22px] mob:text-[20px] border-t border-white py-5 mob:border-none mob:py-0">
                                     ОГРН: 1155075002103
                                     <br />
                                     ИНН/КПП: 5075028348/773101001

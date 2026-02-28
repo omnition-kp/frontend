@@ -67,12 +67,12 @@ export const Kp = ({ id }: KpProps) => {
         load();
     }, []);
 
-    if (loading) {
-        return <Loader />;
-    }
+    // if (loading) {
+    //     return <Loader />;
+    // }
 
     return (
-        <main className="grid grid-cols-1 gap-37.5">
+        <main className="grid grid-cols-1 gap-15 lg:gap-37.5 mob:gap-20">
             <Hero />
             <Manager {...MOCK_MANAGER} />
             <CommercialProposal {...MOCK_COMMERCIAL_PROPOSAL} />

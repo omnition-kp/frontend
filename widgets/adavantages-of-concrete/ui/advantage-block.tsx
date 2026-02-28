@@ -124,14 +124,19 @@ export const AdvantageBlock = ({
             )}
 
             <div className="flex flex-col justify-between items-start h-full">
-                <Headline variant="5" className="text-gray">
+                <Headline
+                    variant="5"
+                    className="text-gray lg:text-[24px] text-[18px]"
+                >
                     {title}
                 </Headline>
 
                 <div className="flex flex-col gap-5">
                     {children}
 
-                    <MainText className="text-gray">{description}</MainText>
+                    <MainText className="text-gray lg:text-[22px] mob:text-[16px] text-[14px]">
+                        {description}
+                    </MainText>
                 </div>
             </div>
         </motion.div>
