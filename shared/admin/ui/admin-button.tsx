@@ -9,6 +9,7 @@ export const AdminButton = ({
     loading,
     variant = "primary",
     className,
+    disabled,
     ...props
 }: AdminButtonProps) => {
     return (
@@ -17,10 +18,11 @@ export const AdminButton = ({
                 onest.className,
                 "font-medium text-[16px] leading-[100%] tracking-[0%] transition-all duration-300 ease-in-out border rounded-[4px] px-8.5 py-1.5",
                 loading ? "cursor-wait" : "cursor-pointer",
+                disabled ? "opacity-50 cursor-not-allowed" : "",
                 BUTTON_CLASS[variant],
                 className,
             )}
-            disabled={loading}
+            disabled={loading || disabled}
             {...props}
         >
             {loading ? (

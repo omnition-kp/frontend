@@ -9,6 +9,8 @@ export const AdminNavLink = ({
     title,
     isActive,
     loading,
+    className,
+    style,
 }: AdminNavLinkProps) => {
     if (loading) {
         return (
@@ -17,6 +19,7 @@ export const AdminNavLink = ({
                     "p-0.5 rounded-[4px] border border-[#ECECEC]/50 bg-[#ECECEC]/50",
                     "flex items-center gap-2 animate-pulse",
                 )}
+                style={style}
             >
                 <div className="bg-white/50 rounded-[2px] w-9.5 h-9.5 shrink-0" />
                 <div className="h-4 bg-white/50 rounded flex-1 max-w-[120px]" />
@@ -38,7 +41,9 @@ export const AdminNavLink = ({
                 isActive
                     ? "border-[#4C4C4C]/20 bg-violet"
                     : "border-[#ECECEC]/50 bg-[#ECECEC]/50",
+                className,
             )}
+            style={style}
         >
             <div className="bg-white rounded-[2px] w-9.5 h-9.5 flex items-center justify-center">
                 <Icon

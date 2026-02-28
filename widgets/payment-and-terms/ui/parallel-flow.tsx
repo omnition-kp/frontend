@@ -1,0 +1,61 @@
+"use client";
+
+import { Title } from "@/shared/ui";
+import { useInView } from "framer-motion";
+import { useRef } from "react";
+import { ROW_GAP, SQUARE_PX } from "../config/parallel-flow.config";
+import { PARALLEL_ITEMS } from "../config/parallel-items";
+import { ParallelFlowAxis } from "./parallel-flow-axis";
+import { ParallelItemBar, ParallelItemLabel } from "./parallel-item";
+
+export const ParallelFlow = () => {
+    const ref = useRef(null);
+    const isInView = useInView(ref, { once: true, amount: 0.2 });
+
+    return (
+        <div ref={ref}>
+            <Title
+                variant="2"
+                title="Параллельный поток процесса"
+                className="mb-9"
+            />
+
+            <div className="grid grid-cols-2 gap-8">
+                <div
+                    className="flex flex-col shrink-0"
+                    style={{ gap: ROW_GAP }}
+                >
+                    {PARALLEL_ITEMS.map((item) => (
+                        <ParallelItemLabel key={item.title} {...item} />
+                    ))}
+                </div>
+
+                <div className="relative flex-1 min-w-0 pl-6 pb-6 overflow-visible">
+                    <ParallelFlowAxis isInView={isInView} />
+
+                    <div
+                        className="flex flex-col flex-1"
+                        style={{ gap: ROW_GAP }}
+                    >
+                        {PARALLEL_ITEMS.map((item, index) => (
+                            <div
+                                key={item.title}
+                                className="flex items-center min-h-[32px] min-w-0"
+                                style={{
+                                    marginLeft: item.startSquares * SQUARE_PX,
+                                }}
+                            >
+                                <ParallelItemBar
+                                    widthSquares={item.widthSquares}
+                                    variant={item.variant}
+                                    animationDelay={index}
+                                    isInView={isInView}
+                                />
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};

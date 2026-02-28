@@ -10,20 +10,26 @@
         "format": "prettier --write .",
         "format:check": "prettier --check .",
         "depcheck": "depcheck",
-        "prepare": "husky"
+        "prepare": "husky",
+        "generate:api": "bunx orval --config ./orval.config.ts"
     },
     "dependencies": {
         "@tanstack/react-query": "^5.90.21",
         "axios": "^1.13.5",
         "clsx": "^2.1.1",
-        "framer-motion": "^12.34.2",
+        "framer-motion": "^12.34.3",
         "lucide-react": "^0.574.0",
         "next": "16.1.6",
         "react": "19.2.3",
         "react-dom": "19.2.3",
         "react-hook-form": "^7.71.1",
+        "imask": "^7.6.1",
+        "react-imask": "^7.6.1",
+        "sonner": "^2.0.7",
         "tailwind-merge": "^3.4.1",
-        "uuid": "^13.0.0"
+        "uuid": "^13.0.0",
+        "xlsx": "^0.18.5",
+        "zustand": "^5.0.11"
     },
     "devDependencies": {
         "@commitlint/cli": "^19",
@@ -32,6 +38,7 @@
         "@types/node": "^20",
         "@types/react": "^19",
         "@types/react-dom": "^19",
+        "ajv": "^8.18.0",
         "babel-plugin-react-compiler": "1.0.0",
         "depcheck": "^1.4.7",
         "eslint": "^9",
@@ -39,6 +46,7 @@
         "eslint-config-prettier": "^10.1.8",
         "husky": "^9.1.7",
         "lint-staged": "^16.2.7",
+        "orval": "^8.4.2",
         "prettier": "^3.8.1",
         "tailwindcss": "^4",
         "typescript": "^5"

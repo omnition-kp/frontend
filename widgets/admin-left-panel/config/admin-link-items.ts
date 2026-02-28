@@ -1,4 +1,4 @@
-import { FilePenIcon, Users } from "lucide-react";
+import { FilePenIcon, Image, Users } from "lucide-react";
 import { AdminNavLinkItem } from "../types/admin-nav-link-item";
 
 export const ADMIN_LINK_ITEMS: AdminNavLinkItem[] = [
@@ -8,9 +8,19 @@ export const ADMIN_LINK_ITEMS: AdminNavLinkItem[] = [
         title: "Клиенты",
     },
     {
+        href: "/admin/managers",
+        icon: Users,
+        title: "Менеджеры",
+    },
+    {
+        href: "/admin/node-design",
+        icon: Image,
+        title: "Узлы продуктов",
+    },
+    {
         href: "/admin/admin",
         icon: FilePenIcon,
-        title: "Админы",
+        title: "Дотсупы",
         forAdmin: true,
     },
 ];

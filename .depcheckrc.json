@@ -13,7 +13,8 @@
         "husky",
         "lint-staged",
         "tailwindcss",
-        "typescript"
+        "typescript",
+        "ajv"
     ],
     "ignore-patterns": [".next", "node_modules", "dist", "build"]
 }

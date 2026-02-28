@@ -1,1 +1,11 @@
 @import "tailwindcss";
+
+@theme {
+    --color-gray: #424242;
+
+    --color-blue: #5181d1;
+    --color-dark-blue: #1c274c;
+
+    --color-violet1: #80829c;
+    --color-violet2: #616471;
+}
