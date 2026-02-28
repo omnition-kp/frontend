@@ -12,13 +12,13 @@ export const Footer = () => {
         <footer className={cn(PADDING_X_CLASS, "bg-[#242426] pt-15 pb-4")}>
             {/* Мобильная версия */}
             <div className="flex flex-col mob:hidden">
-                <div className="pb-3 border-b border-white mb-6">
+                <div className="pb-3 border-b border-white lg:mb-6">
                     <Image
                         src={"/logo.svg"}
                         alt="logo"
                         width={1000}
                         height={1000}
-                        className="w-full max-w-[200px] h-auto"
+                        className="w-full lg:max-w-[200px] h-auto"
                         unoptimized
                         draggable={false}
                     />
