@@ -30,7 +30,7 @@ export const ParallelFlow = () => {
                     ))}
                 </div>
 
-                <div className="relative flex-1 min-w-0 overflow-x-auto lg:overflow-visible -mx-px lg:mx-0">
+                <div className="relative flex-1 min-w-0 overflow-x-auto overflow-y-hidden lg:overflow-visible -mx-px lg:mx-0">
                     <div className="relative pl-6 pb-6 min-w-[600px] lg:min-w-0">
                         <ParallelFlowAxis isInView={isInView} />
 
