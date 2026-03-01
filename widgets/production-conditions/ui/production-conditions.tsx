@@ -24,13 +24,13 @@ export const ProductionConditions = ({ data }: ProductionConditionsProps) => {
             </Headline>
 
             <div className="flex lg:flex-row flex-col items-start lg:gap-10.5 gap-5">
-                <div className="flex flex-col gap-5">
+                <div className="flex lg:w-[50%] flex-col gap-5">
                     {first.map((item, index) => (
                         <DotText key={index} title={item} />
                     ))}
                 </div>
 
-                <div className="flex flex-col gap-5">
+                <div className="flex lg:w-[50%] flex-col gap-5">
                     {second.map((item, index) => (
                         <DotText key={index} title={item} />
                     ))}
