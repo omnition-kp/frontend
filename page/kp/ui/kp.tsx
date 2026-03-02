@@ -22,7 +22,6 @@ import { Stairs } from "@/widgets/stairs";
 import { Landscaping } from "@/widgets/landscaping";
 import { RepairAndRestoration } from "@/widgets/repair-and-restoration";
 import { Footer } from "@/widgets/footer";
-import { Loader } from "@/widgets/loader";
 
 // Конфиги\утилиты
 import {
@@ -41,7 +40,7 @@ import { useEffect, useState } from "react";
 
 export const Kp = ({ id }: KpProps) => {
     void id; // route param, reserved for future use
-    const [loading, setLoading] = useState(true);
+    const [, setLoading] = useState(true);
     const [calculationTable, setCalculationTable] =
         useState<CalculationTableData>({
             sections: [],

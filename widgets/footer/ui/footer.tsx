@@ -9,10 +9,15 @@ import { DOCUMENTS } from "../config/documents";
 
 export const Footer = () => {
     return (
-        <footer className={cn(PADDING_X_CLASS, "bg-[#242426] pt-15 pb-4")}>
+        <footer
+            className={cn(
+                PADDING_X_CLASS,
+                "bg-[#242426] pt-5 lg:pt-15 lg:pb-4 pb-2",
+            )}
+        >
             {/* Мобильная версия */}
             <div className="flex flex-col mob:hidden">
-                <div className="pb-3 border-b border-white lg:mb-6">
+                <div className="pb-3 border-b border-white">
                     <Image
                         src={"/logo.svg"}
                         alt="logo"
@@ -23,7 +28,7 @@ export const Footer = () => {
                         draggable={false}
                     />
                 </div>
-                <div className="flex items-start justify-between gap-4 mb-6">
+                <div className="flex items-center justify-between gap-4 py-4.5">
                     <div className="flex flex-col gap-1">
                         <Link
                             href="tel:+74957745434"

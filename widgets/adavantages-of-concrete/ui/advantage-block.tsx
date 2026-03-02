@@ -68,7 +68,7 @@ export const AdvantageBlock = ({
     return (
         <motion.div
             ref={ref}
-            className="relative aspect-square py-3.5 px-5.5"
+            className="relative mob:min-h-[350px] min-h-[300px] flex flex-col py-3.5 px-5.5"
             variants={blockVariants}
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
@@ -123,7 +123,7 @@ export const AdvantageBlock = ({
                 />
             )}
 
-            <div className="flex flex-col justify-between items-start h-full">
+            <div className="flex flex-1 min-h-0 flex-col justify-between items-start">
                 <Headline
                     variant="5"
                     className="text-gray lg:text-[24px] text-[18px]"

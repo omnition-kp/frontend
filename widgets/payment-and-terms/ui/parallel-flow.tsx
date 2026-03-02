@@ -3,7 +3,11 @@
 import { Title } from "@/shared/ui";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
-import { ROW_GAP, SQUARE_PX } from "../config/parallel-flow.config";
+import {
+    ROW_GAP,
+    ROW_HEIGHT_PX,
+    SQUARE_PX,
+} from "../config/parallel-flow.config";
 import { PARALLEL_ITEMS } from "../config/parallel-items";
 import { ParallelFlowAxis } from "./parallel-flow-axis";
 import { ParallelItemBar, ParallelItemLabel } from "./parallel-item";
@@ -41,8 +45,9 @@ export const ParallelFlow = () => {
                             {PARALLEL_ITEMS.map((item, index) => (
                                 <div
                                     key={item.title}
-                                    className="flex items-center min-h-[32px] min-w-0"
+                                    className="flex items-center min-w-0"
                                     style={{
+                                        minHeight: ROW_HEIGHT_PX,
                                         marginLeft:
                                             item.startSquares * SQUARE_PX,
                                     }}

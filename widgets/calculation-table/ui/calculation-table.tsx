@@ -35,7 +35,7 @@ export function CalculationTable({
     return (
         <section className={cn(PADDING_X_CLASS)}>
             <div className="flex lg:flex-row flex-col items-start justify-between gap-1 lg:mb-13 mob:mb-10 mb-6">
-                <Headline className="lg:text-[56px] mob:text-[34px] text-[24px]">
+                <Headline className="lg:text-[56px] mob:text-[34px] lg:w-[50%] text-[24px]">
                     <span className="text-[#4C4C4C]">{name.split(" ")[0]}</span>{" "}
                     {name.split(" ").slice(1).join(" ")}
                 </Headline>
@@ -67,7 +67,7 @@ export function CalculationTable({
             )}
 
             <div className="flex justify-end lg:mt-6 mob:mt-8 mt-6">
-                <Button>Скачать смету</Button>
+                <Button className="uppercase">Скачать смету</Button>
             </div>
         </section>
     );

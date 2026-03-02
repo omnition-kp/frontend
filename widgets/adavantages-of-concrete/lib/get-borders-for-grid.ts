@@ -1,6 +1,7 @@
 export function getBordersForGrid(
     index: number,
     cols: number,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars -- reserved for future use
     total: number,
 ): {
     leftBorder: boolean;

@@ -11,7 +11,9 @@ import {
  * @param buffer - буфер файла
  * @returns объект с данными таблицы
  */
-export const parseCalculationTableFromFile = (buffer: ArrayBuffer) => {
+export const parseCalculationTableFromFile = (
+    buffer: ArrayBuffer,
+): CalculationTableData => {
     const workbook = XLSX.read(buffer, { type: "buffer" });
     const sheet = workbook.Sheets[workbook.SheetNames[0]];
 

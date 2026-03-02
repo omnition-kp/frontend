@@ -1,4 +1,5 @@
 export const SQUARE_PX = 32;
+export const ROW_HEIGHT_PX = 36; // высота строки = высота иконки (h-9), чтобы полосы графика совпадали по высоте с текстом слева
 export const ROW_GAP = 16;
 export const AXIS_CLASS = "bg-blue";
 export const AXIS_LINE_PX = 2;

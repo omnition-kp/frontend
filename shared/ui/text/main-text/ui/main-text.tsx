@@ -13,7 +13,7 @@ export const MainText = ({
         <p
             className={cn(
                 gtWalsheim.className,
-                "tracking-[0%]",
+                "tracking-[0%] leading-[110%]!",
                 mainTextClassNameVariants[variant],
                 className,
             )}

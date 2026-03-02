@@ -4,13 +4,19 @@ import { cn } from "@/shared/utils";
 import { MainText } from "@/shared/ui";
 import { motion } from "framer-motion";
 import { ParallelItemProps } from "../types/parallel-item.props";
-import { PARALLEL_FLOW_ANIMATION } from "../config/parallel-flow.config";
+import {
+    PARALLEL_FLOW_ANIMATION,
+    ROW_HEIGHT_PX,
+} from "../config/parallel-flow.config";
 
 const BAR_ROUNDED = 4;
 const DARK_BAR_COLOR = "#242426";
 
 export const ParallelItemLabel = ({ title, icon }: ParallelItemProps) => (
-    <div className="flex items-center gap-3 min-h-[32px]">
+    <div
+        className="flex items-center gap-3"
+        style={{ minHeight: ROW_HEIGHT_PX }}
+    >
         <div className="w-9 h-9 border border-gray rounded-full flex items-center justify-center shrink-0">
             {icon}
         </div>
@@ -50,7 +56,7 @@ export const ParallelItemBar = ({
                 variant === "default" && "bg-blue",
             )}
             style={{
-                height: SQUARE_PX,
+                height: ROW_HEIGHT_PX,
                 width: widthSquares * SQUARE_PX,
                 borderRadius: BAR_ROUNDED,
                 ...(variant === "dark" && { backgroundColor: DARK_BAR_COLOR }),

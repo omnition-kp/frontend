@@ -35,7 +35,7 @@ export const FillingBlockTemplate = ({
                 </MainText>
                 <Headline
                     variant="4"
-                    className="text-white lg:text-[30px] mob:text-[18px] text-[16px]"
+                    className="text-white lg:text-[30px] mob:text-[18px] text-[16px] normal-case"
                 >
                     {logisticMaterial}
                 </Headline>

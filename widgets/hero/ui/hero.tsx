@@ -22,7 +22,7 @@ export const Hero = () => {
 
             {/* 2. ЛОГОТИП */}
             <div className={cn("w-full relative z-10 pt-8", PADDING_X_CLASS)}>
-                <div className="w-full flex justify-center mb-8 mob:mb-0">
+                <div className="w-full flex justify-center lg:justify-start mb-8 mob:mb-0">
                     <div className="w-full max-w-[1440px]">
                         <Image
                             src="/logo.svg"
@@ -37,7 +37,7 @@ export const Hero = () => {
 
                 <Headline
                     variant="2"
-                    className="uppercase text-white leading-none text-[20px] block mob:hidden"
+                    className="uppercase text-white !leading-[1] text-[20px] block mob:hidden"
                 >
                     ВЫСОКОКАЧЕСТВЕННЫЙ
                     <br />
@@ -59,7 +59,7 @@ export const Hero = () => {
                     <div className="pb-6 md:pb-8 relative z-10 w-fit">
                         <Headline
                             variant="2"
-                            className="uppercase text-white leading-none text-[30px] lg:text-[50px] hidden mob:block"
+                            className="uppercase text-white text-[30px] lg:text-[50px] hidden mob:block"
                         >
                             ВЫСОКОКАЧЕСТВЕННЫЙ
                             <br />

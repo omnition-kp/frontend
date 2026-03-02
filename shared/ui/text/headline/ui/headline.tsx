@@ -16,7 +16,7 @@ export const Headline = ({
         <Component
             className={cn(
                 gtWalsheim.className,
-                "uppercase tracking-[0%] font-medium",
+                "uppercase tracking-none leading-none! font-medium",
                 headlineClassNameVariants[variant],
                 className,
             )}
