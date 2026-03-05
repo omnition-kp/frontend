@@ -10,7 +10,18 @@ export type CalculationTableRowProps = {
 const CELL_BASE =
     "px-3 py-2 border-r border-[#919191] last:border-r-0 align-middle";
 
-const ROW_ALIGN = "text-center";
+// id — центр, наименование — слева, единицы — центр, остальные — справа
+const CELL_ALIGN = [
+    "text-center", // id
+    "text-left", // наименование
+    "text-center", // единицы
+    "text-right", // quantity и далее
+    "text-right",
+    "text-right",
+    "text-right",
+    "text-right",
+    "text-right",
+];
 
 export function CalculationTableRow({ row }: CalculationTableRowProps) {
     const cells = [
@@ -29,7 +40,7 @@ export function CalculationTableRow({ row }: CalculationTableRowProps) {
             {cells.map((content, i) => (
                 <td
                     key={i}
-                    className={cn(CELL_BASE, COLUMN_WIDTHS[i], ROW_ALIGN)}
+                    className={cn(CELL_BASE, COLUMN_WIDTHS[i], CELL_ALIGN[i])}
                 >
                     <MainText variant="2" className="m-0 text-gray-700">
                         {content}

@@ -33,19 +33,19 @@ export function CalculationTableSectionHeader({
                     {name}
                 </MainText>
             </td>
-            <td colSpan={4} className="px-3 py-3 text-right align-middle">
-                <MainText variant="2" className="m-0 text-white">
-                    Всего: {total}
-                </MainText>
-            </td>
-            <td className="px-3 py-3 w-10 text-right align-middle">
-                <ChevronDownIcon
-                    className={cn(
-                        "inline-block w-5 h-5 text-white transition-transform duration-300 ease-out",
-                        isOpen && "rotate-180",
-                    )}
-                    aria-hidden
-                />
+            <td colSpan={5} className="px-3 py-3 w-10 text-right align-middle">
+                <div className="flex items-center justify-end gap-4">
+                    <MainText variant="2" className="m-0 text-white">
+                        Всего: {total}
+                    </MainText>
+                    <ChevronDownIcon
+                        className={cn(
+                            "inline-block w-5 h-5 text-white transition-transform duration-300 ease-out",
+                            isOpen && "rotate-180",
+                        )}
+                        aria-hidden
+                    />
+                </div>
             </td>
         </tr>
     );
