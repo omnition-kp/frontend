@@ -11,12 +11,7 @@ import { CalculationTableSummary } from "./calculation-table-summary";
 
 const FIRST_SECTION_OPEN = new Set([0]);
 
-export function CalculationTable({
-    id,
-    name,
-    date,
-    data,
-}: CalculationTableProps) {
+export function CalculationTable({ name, data }: CalculationTableProps) {
     const [openSections, setOpenSections] =
         useState<Set<number>>(FIRST_SECTION_OPEN);
 
@@ -35,15 +30,9 @@ export function CalculationTable({
     return (
         <section className={cn(PADDING_X_CLASS)}>
             <div className="flex lg:flex-row flex-col items-start justify-between gap-1 lg:mb-13 mob:mb-10 mb-6">
-                <Headline className="lg:text-[56px] mob:text-[34px] lg:w-[50%] text-[24px]">
+                <Headline className="lg:text-[56px] mob:text-[34px] text-[24px]">
                     <span className="text-[#4C4C4C]">{name.split(" ")[0]}</span>{" "}
                     {name.split(" ").slice(1).join(" ")}
-                </Headline>
-                <Headline
-                    variant="2"
-                    className="text-[#4C4C4C] lg:text-[50px] text-[34px] hidden mob:block"
-                >
-                    №{id} от {date}
                 </Headline>
             </div>
 

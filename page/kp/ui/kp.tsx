@@ -94,7 +94,9 @@ export const Kp = ({ id }: KpProps) => {
             <MobileFactory visible={true} />
             <InteriorOptions visible={true} />
             <Stairs visible={true} />
-            <Landscaping visible={true} />
+            <div className="mt-5 lg:mt-0">
+                <Landscaping visible={true} />
+            </div>
             <RepairAndRestoration visible={true} />
             <Footer />
         </main>

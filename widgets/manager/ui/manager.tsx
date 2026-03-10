@@ -13,7 +13,7 @@ export const Manager = ({ name, post, phone, email, photo }: ManagerProps) => {
         <section
             className={cn(
                 PADDING_X_CLASS,
-                "grid grid-cols-1 xl:grid-cols-2 gap-7.5",
+                "grid grid-cols-1 xl:grid-cols-2 gap-20",
             )}
         >
             <div className="flex flex-col justify-between gap-1 text-gray min-w-0">
@@ -96,13 +96,13 @@ export const Manager = ({ name, post, phone, email, photo }: ManagerProps) => {
                     <Image
                         src={photo}
                         alt={name}
-                        width={271}
-                        height={271}
-                        sizes="(max-width: 768px) 96px, (max-width: 1280px) 200px, 271px"
+                        width={200}
+                        height={200}
+                        sizes="(max-width: 768px) 72px, (max-width: 1280px) 140px, 200px"
                         unoptimized
                         className={cn(
                             "order-2 mob:order-1 xl:order-1 shrink-0 rounded-full object-cover",
-                            "w-24 h-24 mob:w-[200px] mob:h-[200px] xl:w-[271px] xl:h-[271px]",
+                            "w-[72px] h-[72px] mob:w-[140px] mob:h-[140px] xl:w-[200px] xl:h-[200px]",
                         )}
                     />
 

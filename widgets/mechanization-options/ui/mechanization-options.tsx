@@ -23,13 +23,16 @@ export const MechanizationOptions = ({
     return (
         <section className={cn(PADDING_X_CLASS)}>
             <Headline className="text-gray lg:mb-11.5 mob:mb-10 mb-6 lg:text-[56px] mob:text-[34px] text-[24px]">
-                ВАРИАНТЫ МЕХАНИЗАЦИИ:
+                ВАРИАНТЫ МЕХАНИЗАЦИИ
             </Headline>
 
             {fillingBlockVisible && (
                 <div>
-                    <Headline className="text-black lg:mb-11.5 mob:mb-10 mb-6 lg:text-[56px] mob:text-[34px] text-[24px]">
-                        Заливка:
+                    <Headline
+                        variant="3"
+                        className="text-black lg:mb-11.5 mob:mb-10 mb-6 lg:text-[40px] mob:text-[20px] text-[16px]"
+                    >
+                        Заливка
                     </Headline>
 
                     {/* Только на мобиле: все блоки по порядку, без переключателя */}
@@ -59,8 +62,11 @@ export const MechanizationOptions = ({
 
             {grindingBlockVisible && (
                 <div className="lg:mt-[150px] mob:mt-20 mt-17.5">
-                    <Headline className="text-black lg:mb-11.5 mob:mb-10 mb-6 lg:text-[56px] mob:text-[34px] text-[24px]">
-                        Шлифовка:
+                    <Headline
+                        variant="3"
+                        className="text-black lg:mb-11.5 mob:mb-10 mb-6 lg:text-[40px] mob:text-[20px] text-[16px]"
+                    >
+                        Шлифовка
                     </Headline>
 
                     {/* Только на мобиле: все блоки по порядку, без переключателя */}

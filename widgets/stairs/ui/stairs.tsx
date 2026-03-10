@@ -6,7 +6,7 @@ export const Stairs = ({ visible }: NotRequiredBlockProps) => {
     return (
         <NotRequiredBlockTemplate visible={visible}>
             <Headline className="text-black lg:mb-10 mob:mb-6 mb-5 lg:text-[56px] mob:text-[34px] text-[24px]">
-                лестницы
+                лестницы и ступени
             </Headline>
 
             <Image
@@ -14,8 +14,9 @@ export const Stairs = ({ visible }: NotRequiredBlockProps) => {
                 alt="stairs"
                 width={1000}
                 height={1000}
-                className="w-full h-auto lg:mb-4 mob:mb-2.5 mb-1"
-                unoptimized
+                className="w-full h-auto lg:mb-4 mob:mb-2.5 mb-1 object-cover max-h-[450px]"
+                quality={100}
+                sizes="1000px 1000px"
                 draggable={false}
             />
 

@@ -13,7 +13,7 @@ export const LEFT_SURFACE_DATA: SurfaceBlockProps = {
 };
 
 export const RIGHT_SURFACE_DATA: SurfaceBlockProps = {
-    title: "экстерьерн",
+    title: "экстерьер",
     photo: "/any-surface/right.png",
     data: [
         "Лестницы, Ступени и стеновые панели",

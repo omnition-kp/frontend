@@ -11,15 +11,18 @@ export const RepairAndRestoration = ({ visible }: NotRequiredBlockProps) => {
                 РЕМОНТ И ВОССТАНОВЛЕНИЕ
             </Headline>
 
-            <Image
-                src={"/repair-and-restoration/photo.png"}
-                alt="repair and restoration"
-                width={1000}
-                height={1000}
-                className="lg:w-full lg:h-auto w-full h-auto object-contain lg:mb-4 mob:mb-2.5 mb-1"
-                unoptimized
-                draggable={false}
-            />
+            <div className="max-h-[450px]">
+                <Image
+                    src={"/repair-and-restoration/photo.jpg"}
+                    alt="repair and restoration"
+                    width={1000}
+                    height={1000}
+                    className="lg:w-full lg:h-auto w-full h-auto object-cover lg:mb-4 mob:mb-2.5 mb-1 object-center max-h-[450px]"
+                    quality={100}
+                    sizes="1000px 1000px"
+                    draggable={false}
+                />
+            </div>
 
             <div className="bg-[#EDEDED] border border-black/15 lg:p-7.5 mob:p-5 p-4">
                 <MainText className="lg:mb-7 mb-4 lg:text-[22px] mob:text-[18px] text-[16px]">

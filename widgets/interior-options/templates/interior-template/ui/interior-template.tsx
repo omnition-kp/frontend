@@ -22,10 +22,9 @@ export const InteriorTemplate = ({
             </div>
 
             <div className="lg:w-[70%] bg-[#919191] py-4 px-3 lg:py-0 lg:px-0">
-                <Headline className="text-white lg:mb-5 mb-4 lg:text-[56px] mob:text-[30px] text-[20px]">
+                <Headline className="text-white lg:text-[24px] text-[18px] mob:hidden block mb-4.5">
                     {title}
                 </Headline>
-
                 {children}
             </div>
         </div>

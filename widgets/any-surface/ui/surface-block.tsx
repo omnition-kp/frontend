@@ -6,16 +6,16 @@ import { DotText, Headline } from "@/shared/ui";
 export const SurfaceBlock = ({ title, photo, data }: SurfaceBlockProps) => {
     return (
         <div>
-            <div className="relative w-full aspect-square mb-8">
+            <div className="relative w-full mb-8">
                 <Image
                     src={photo}
                     alt={title}
                     width={648}
                     height={538}
                     draggable={false}
+                    quality={100}
                     sizes="648px 538px"
-                    className="w-full h-full object-cover"
-                    unoptimized
+                    className="w-full h-full object-cover max-h-[356px]"
                 />
 
                 <div className={LINE_CLASS.left} />

@@ -8,7 +8,7 @@ export const InteriorOptions = ({ visible }: NotRequiredBlockProps) => {
     return (
         <NotRequiredBlockTemplate visible={visible}>
             <Headline className="text-black lg:mb-10 mob:mb-6 mb-5 lg:text-[56px] mob:text-[34px] text-[24px]">
-                варианты интерьера:
+                варианты интерьера
             </Headline>
 
             {/* Только на мобиле: все блоки по порядку, без переключателя */}

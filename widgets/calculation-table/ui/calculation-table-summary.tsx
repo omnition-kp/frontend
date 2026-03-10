@@ -30,7 +30,7 @@ export function CalculationTableSummary({
                             )}
                         >
                             <MainText variant="2" className="m-0 text-gray-800">
-                                ИТОГО по разделу №1
+                                ИТОГО, раздел 1
                             </MainText>
                         </td>
                         <td className={cn(summaryCell, COLUMN_WIDTHS[2])} />

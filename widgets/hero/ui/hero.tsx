@@ -143,7 +143,7 @@ export const Hero = () => {
                         <div className="flex flex-col mob:flex-row w-full items-stretch pt-6">
                             {/* ЛЕВАЯ КОЛОНКА */}
                             <div className="w-full mob:w-[38%] pr-4">
-                                <MainText className="text-white/80 w-full mob:max-w-[380px] text-[14px] lg:text-[22px] mob:text-[16px] border-t border-white py-5 mob:border-none mob:py-0">
+                                <MainText className="text-white/80 w-full mob:max-w-[500px] text-[14px] lg:text-[22px] mob:text-[16px] border-t border-white py-5 mob:border-none mob:py-0">
                                     115162, г.Москва, Внутренний территориальный
                                     городской муниципальный округ Даниловский,
                                     ул.Шухова, д.17, корп.2
