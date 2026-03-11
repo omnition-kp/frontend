@@ -10,7 +10,7 @@ export const Stairs = ({ visible }: NotRequiredBlockProps) => {
             </Headline>
 
             <Image
-                src={"/stairs/photo.png"}
+                src={"/stairs/photo.jpg"}
                 alt="stairs"
                 width={1000}
                 height={1000}

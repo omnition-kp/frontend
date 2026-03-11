@@ -16,7 +16,7 @@ export const Manager = ({ name, post, phone, email, photo }: ManagerProps) => {
                 "grid grid-cols-1 xl:grid-cols-2 gap-20",
             )}
         >
-            <div className="flex flex-col justify-between gap-1 text-gray min-w-0">
+            <div className="flex flex-col justify-between gap-5 text-gray min-w-0">
                 <MainText className="text-[14px] mob:text-[22px]">
                     Компания OMNITON более 10 лет специализируется на
                     производстве архитектурного бетона (терраццо, микробетон,

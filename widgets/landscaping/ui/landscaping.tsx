@@ -20,7 +20,7 @@ export const Landscaping = ({ visible }: NotRequiredBlockProps) => {
                             alt="landscaping"
                             width={1000}
                             height={1000}
-                            className="w-full h-auto"
+                            className="w-full h-full"
                             quality={100}
                             draggable={false}
                         />
