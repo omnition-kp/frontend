@@ -35,8 +35,8 @@ export const PARALLEL_ITEMS: ParallelItemProps[] = [
     {
         title: "Устройство композитного основания",
         icon: createElement(HammerIcon),
-        widthSquares: 3,
-        variant: "default",
+        widthSquares: 6,
+        variant: "dark",
         startSquares: 6,
     },
     {
@@ -44,20 +44,20 @@ export const PARALLEL_ITEMS: ParallelItemProps[] = [
         icon: createElement(TimeIcon),
         widthSquares: 3,
         variant: "default",
-        startSquares: 9,
+        startSquares: 12,
     },
     {
         title: "Цикл основных работ по устройству финишной поверхности",
         icon: createElement(SchockAbsorberIcon),
         widthSquares: 3,
         variant: "default",
-        startSquares: 6,
+        startSquares: 15,
     },
     {
         title: "Производство основного материала",
         icon: createElement(PaintRollerIcon),
-        widthSquares: 6,
-        variant: "dark",
-        startSquares: 12,
+        widthSquares: 3,
+        variant: "default",
+        startSquares: 18,
     },
 ];
