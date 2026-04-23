@@ -47,8 +47,8 @@ export const AddClientModal = ({ isOpen, onClose }: AddClientModalProps) => {
         const name = values.name?.trim();
         if (!name) return;
 
+        console.log("name: ", name);
         try {
-            console.log("name", name);
             await createClient({
                 data: { name },
             });
