@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { useQueryClient } from "@tanstack/react-query";
 import { AdminInput, AdminError, AdminButton } from "@/shared/admin"; // Используем ваши компоненты
 import { cn } from "@/shared/utils";
@@ -29,17 +29,12 @@ export const AddClientModal = ({ isOpen, onClose }: AddClientModalProps) => {
         error: mutationError,
     } = useClientControllerCreate();
 
-    const {
-        register,
-        handleSubmit,
-        reset,
-        setError,
-        formState: { errors },
-    } = useForm<CreateClientFormValues>({
-        defaultValues: {
-            name: "",
-        },
-    });
+    const { control, handleSubmit, reset, setError } =
+        useForm<CreateClientFormValues>({
+            defaultValues: {
+                name: "",
+            },
+        });
 
     useEffect(() => {
         if (isOpen) {
@@ -116,16 +111,27 @@ export const AddClientModal = ({ isOpen, onClose }: AddClientModalProps) => {
 
                 <div className="flex flex-col gap-8">
                     <div>
-                        <AdminInput
-                            placeholder="Имя клиента"
-                            variant="alternative"
-                            error={errors.name?.message}
-                            disabled={isPending}
-                            {...register("name", {
+                        <Controller
+                            name="name"
+                            control={control}
+                            rules={{
                                 required: "Введите имя клиента",
-                                setValueAs: (value) =>
-                                    typeof value === "string" ? value : "",
-                            })}
+                            }}
+                            render={({ field, fieldState }) => (
+                                <AdminInput
+                                    placeholder="Имя клиента"
+                                    variant="alternative"
+                                    disabled={isPending}
+                                    error={fieldState.error?.message}
+                                    value={field.value ?? ""}
+                                    onChange={(event) =>
+                                        field.onChange(event.target.value)
+                                    }
+                                    onBlur={field.onBlur}
+                                    name={field.name}
+                                    ref={field.ref}
+                                />
+                            )}
                         />
                     </div>
 
