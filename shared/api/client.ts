@@ -46,7 +46,17 @@ export const customInstance = <T>(
 
     const normalizedUrl = isAdmin
         ? rawUrl.replace(/^\/api\/admin/, "").replace(/^\/admin/, "")
-        : rawUrl;
+        : rawUrl.replace(/^\/api/, ""); // убираем /api для обычного API (baseURL уже содержит /api)
+
+    // Для FormData сбрасываем Content-Type — axios сам выставит multipart/form-data с boundary.
+    // Иначе дефолтный application/json от $apiAdmin ломает загрузку файлов (бэк видит files пустым).
+    const body = (options as RequestInit | undefined)?.body;
+    if (body instanceof FormData) {
+        config.headers = {
+            ...(config.headers as Record<string, unknown>),
+            "Content-Type": undefined,
+        } as AxiosRequestConfig["headers"];
+    }
 
     const client = isAdmin ? $apiAdmin : $api;
 

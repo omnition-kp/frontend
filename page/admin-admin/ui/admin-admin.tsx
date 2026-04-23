@@ -149,7 +149,9 @@ export const AdminAdmin = () => {
         <div className="w-full">
             <div className="flex items-center justify-between mb-6">
                 <AdminHeadline title="Доступы" className="text-[#4C4C4C]" />
-                <AdminAddButton link="admin">Добавить админа</AdminAddButton>
+                <AdminAddButton link="admin" typeOfButton="link">
+                    Добавить админа
+                </AdminAddButton>
             </div>
 
             <div className="grid grid-cols-4 gap-1.5 mb-6">

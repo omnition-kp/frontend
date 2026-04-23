@@ -1,6 +1,7 @@
 "use client";
 
 // Блоки
+import { Loader } from "@/widgets/loader";
 import { Hero } from "@/widgets/hero";
 import { KpProps } from "../types";
 import { Manager } from "@/widgets/manager";
@@ -8,7 +9,7 @@ import { CommercialProposal } from "@/widgets/commercial-proposal";
 import { Documents } from "@/widgets/documents";
 import {
     CalculationTable,
-    CalculationTableData,
+    type CalculationTableData,
 } from "@/widgets/calculation-table";
 import { ProductionConditions } from "@/widgets/production-conditions";
 import { PaymentAndTerms } from "@/widgets/payment-and-terms";
@@ -23,81 +24,86 @@ import { Landscaping } from "@/widgets/landscaping";
 import { RepairAndRestoration } from "@/widgets/repair-and-restoration";
 import { Footer } from "@/widgets/footer";
 
-// Конфиги\утилиты
+// Запросы
+import type { KpDto } from "@/shared/types/server";
 import {
-    MOCK_CALCULATION_TABLE,
-    MOCK_COMMERCIAL_PROPOSAL,
-    MOCK_DOCUMENTS,
-    MOCK_MANAGER,
-    MOCK_NODE_DESIGN,
-    MOCK_PAYMENT_AND_TERMS,
-    MOCK_PRODUCTION_CONDITIONS,
-} from "../config/mock";
-import { parseCalculationTableFromFile } from "@/shared/lib";
+    useGetKpControllerGetKp,
+    useGetTableDataControllerGetTableData,
+} from "@/shared/queries";
 
 // Библиотеки
-import { useEffect, useState } from "react";
+import { notFound } from "next/navigation";
 
 export const Kp = ({ id }: KpProps) => {
-    void id; // route param, reserved for future use
-    const [, setLoading] = useState(true);
-    const [calculationTable, setCalculationTable] =
-        useState<CalculationTableData>({
-            sections: [],
-            totalForFirstSection: {
-                totalCostWork: "",
-                totalCost: "",
+    const { data: kpData, isLoading: loadingKpData } = useGetKpControllerGetKp(
+        id,
+        {
+            query: {
+                select: (response: unknown) =>
+                    (response as { data?: KpDto })?.data ?? (response as KpDto),
             },
-            trNr: "",
-            nds: "",
+        },
+    );
+    const { data: calculationTable, isLoading: loadingCalculationTable } =
+        useGetTableDataControllerGetTableData(id, {
+            query: {
+                select: (response: unknown) =>
+                    (response as { data?: CalculationTableData })?.data ??
+                    (response as CalculationTableData),
+            },
         });
 
-    useEffect(() => {
-        const load = async () => {
-            const response = await fetch(MOCK_CALCULATION_TABLE.pathFile);
+    if (loadingKpData || loadingCalculationTable) {
+        return <Loader />;
+    }
 
-            const buffer = await response.arrayBuffer();
-
-            const parsedSections = parseCalculationTableFromFile(buffer);
-            setCalculationTable(parsedSections);
-            setLoading(false);
-        };
-
-        load();
-    }, []);
-
-    // if (loading) {
-    //     return <Loader />;
-    // }
+    if (!kpData || !calculationTable) {
+        return notFound();
+    }
 
     return (
         <main className="grid grid-cols-1 gap-15 lg:gap-37.5 mob:gap-20">
             <Hero />
-            <Manager {...MOCK_MANAGER} />
-            <CommercialProposal {...MOCK_COMMERCIAL_PROPOSAL} />
+            <Manager {...kpData.manager} />
+            <CommercialProposal
+                id={kpData.numberKp}
+                date={kpData.date}
+                adress={kpData.orderAddress}
+                client={kpData.clientName}
+                contactPerson={kpData.contactPerson}
+                numberOrder={kpData.numberOrder}
+                details={kpData.details}
+            />
             <div className="grid grid-cols-1 gap-6">
                 <CalculationTable
-                    {...MOCK_CALCULATION_TABLE}
+                    id={kpData.id}
+                    name={kpData.estimate.name}
+                    date={kpData.date}
                     data={calculationTable}
                 />
-                <Documents documents={MOCK_DOCUMENTS} />
+                <Documents
+                    documents={kpData.documents.map((document) => ({
+                        path: document.filePath,
+                        name: document.name,
+                    }))}
+                />
             </div>
-            <PaymentAndTerms data={MOCK_PAYMENT_AND_TERMS} />
-            <ProductionConditions data={MOCK_PRODUCTION_CONDITIONS} />
-            <NodeDesign {...MOCK_NODE_DESIGN} />
-            <AnySurface visible={true} />
-            <AdavantagesOfConcrete visible={true} />
+            <PaymentAndTerms data={kpData.payAndDeadlines} />
+            <ProductionConditions data={kpData.productionConditions} />
+            <NodeDesign {...kpData.nodeDesign} />
+            <AnySurface visible={kpData.anySurface} />
+            <AdavantagesOfConcrete visible={kpData.advantagesOfConcrete} />
             <MechanizationOptions
-                fillingBlockVisible={true}
-                grindingBlockVisible={true}
+                fillingBlockVisible={kpData.variationsOfTheMechanism}
+                grindingBlockVisible={kpData.grinding}
             />
-            <MobileFactory visible={true} />
-            <InteriorOptions visible={true} />
-            <Stairs visible={true} />
+            <MobileFactory visible={kpData.ownMobileFactory} />
+            <InteriorOptions visible={kpData.interiorOptions} />
+            <Stairs visible={kpData.stairs} />
             <div className="mt-5 lg:mt-0">
-                <Landscaping visible={true} />
+                <Landscaping visible={kpData.landscaping} />
             </div>
-            <RepairAndRestoration visible={true} />
+            <RepairAndRestoration visible={kpData.repairAndRestoration} />
             <Footer />
         </main>
     );

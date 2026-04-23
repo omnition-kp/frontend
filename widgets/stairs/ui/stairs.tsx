@@ -14,7 +14,7 @@ export const Stairs = ({ visible }: NotRequiredBlockProps) => {
                 alt="stairs"
                 width={1000}
                 height={1000}
-                className="w-full h-auto lg:mb-4 mob:mb-2.5 mb-1 object-cover max-h-[450px]"
+                className="w-full h-auto object-[center_88%] lg:mb-4 mob:mb-2.5 mb-1 object-cover lg:max-h-[450px] mob:max-h-[354px] max-h-[195px]"
                 quality={100}
                 sizes="1000px 1000px"
                 draggable={false}

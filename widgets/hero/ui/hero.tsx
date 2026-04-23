@@ -37,11 +37,13 @@ export const Hero = () => {
 
                 <Headline
                     variant="2"
-                    className="uppercase text-white !leading-[1] text-[20px] block mob:hidden"
+                    className="uppercase text-white leading-none! text-[20px] block mob:hidden"
                 >
                     ВЫСОКОКАЧЕСТВЕННЫЙ
                     <br />
-                    ЭНЕРГОЭФФЕКТИВНЫЙ
+                    <span className="inline-block ml-[1.4em]">
+                        ЭНЕРГОЭФФЕКТИВНЫЙ
+                    </span>
                     <br />
                     АРХИТЕКТУРНЫЙ БЕТОН
                 </Headline>
@@ -63,7 +65,9 @@ export const Hero = () => {
                         >
                             ВЫСОКОКАЧЕСТВЕННЫЙ
                             <br />
-                            ЭНЕРГОЭФФЕКТИВНЫЙ
+                            <span className="inline-block ml-[1.4em]">
+                                ЭНЕРГОЭФФЕКТИВНЫЙ
+                            </span>
                             <br />
                             АРХИТЕКТУРНЫЙ БЕТОН
                         </Headline>

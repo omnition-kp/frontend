@@ -1,0 +1,71 @@
+# Деплой frontend. Запускать после первого деплоя backend (на сервере уже есть docker-compose.yml).
+# Секреты: HOST, USERNAME, SSH_KEY, GITHUB_TOKEN, NEXT_PUBLIC_API_HOST
+
+name: Deploy Frontend
+
+on:
+    push:
+        branches: ["main"]
+
+env:
+    REGISTRY: ghcr.io
+    IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+    build:
+        name: Build
+        runs-on: ubuntu-latest
+        permissions:
+            contents: read
+            packages: write
+        steps:
+            - uses: actions/checkout@v4
+            - name: Validate required secrets
+              env:
+                  NEXT_PUBLIC_API_HOST: ${{ secrets.NEXT_PUBLIC_API_HOST }}
+              run: |
+                  if [ -z "$NEXT_PUBLIC_API_HOST" ]; then
+                    echo "NEXT_PUBLIC_API_HOST is not set"
+                    exit 1
+                  fi
+            - uses: docker/login-action@v3
+              with:
+                  registry: ${{ env.REGISTRY }}
+                  username: ${{ github.actor }}
+                  password: ${{ secrets.GITHUB_TOKEN }}
+            - uses: docker/build-push-action@v5
+              with:
+                  context: .
+                  file: ./dockerfile
+                  push: true
+                  tags: |
+                      ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+                      ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+                  build-args: |
+                      NEXT_PUBLIC_API_HOST=${{ secrets.NEXT_PUBLIC_API_HOST }}
+
+    deploy:
+        name: Deploy
+        needs: build
+        runs-on: ubuntu-latest
+        env:
+            GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            NEXT_PUBLIC_API_HOST: ${{ secrets.NEXT_PUBLIC_API_HOST }}
+        steps:
+            - uses: appleboy/ssh-action@master
+              with:
+                  host: ${{ secrets.HOST }}
+                  username: ${{ secrets.USERNAME }}
+                  key: ${{ secrets.SSH_KEY }}
+                  envs: GHCR_TOKEN,NEXT_PUBLIC_API_HOST,GITHUB_ACTOR
+                  script: |
+                      cd /opt/app
+
+                      # ENV Client (переменные через envs, не в теле скрипта)
+                      printf 'NODE_ENV=production\nNEXT_PUBLIC_API_HOST=%s\n' "$NEXT_PUBLIC_API_HOST" > .env.client
+
+                      echo "$GHCR_TOKEN" | docker login ghcr.io -u "$GITHUB_ACTOR" --password-stdin
+                      docker compose pull client
+                      docker compose up -d --no-deps client
+                      docker compose restart nginx
+                      docker image prune -f

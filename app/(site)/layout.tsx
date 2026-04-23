@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "@/shared/styles/globals.css";
+import { QueryProvider } from "@/shared/providers";
 
 export const metadata: Metadata = {
     title: "OMNITON - производитель архитектурного бетона",
@@ -12,7 +13,9 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="ru">
-            <body className={`antialiased`}>{children}</body>
+            <body className={`antialiased`}>
+                <QueryProvider>{children}</QueryProvider>
+            </body>
         </html>
     );
 }

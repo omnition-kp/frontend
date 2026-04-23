@@ -8,12 +8,24 @@ import { Button, Headline } from "@/shared/ui";
 import { CalculationTableHeader } from "./calculation-table-header";
 import { CalculationTableSection } from "./calculation-table-section";
 import { CalculationTableSummary } from "./calculation-table-summary";
+import { $api } from "@/shared/utils";
+import { getGeneratePdfTableControllerGeneratePdfTableUrl } from "@/shared/queries/generate-pdf-table/generate-pdf-table";
 
 const FIRST_SECTION_OPEN = new Set([0]);
 
-export function CalculationTable({ name, data }: CalculationTableProps) {
+function downloadBlob(blob: Blob, filename: string) {
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = filename.endsWith(".pdf") ? filename : `${filename}.pdf`;
+    link.click();
+    URL.revokeObjectURL(url);
+}
+
+export function CalculationTable({ id, name, data }: CalculationTableProps) {
     const [openSections, setOpenSections] =
         useState<Set<number>>(FIRST_SECTION_OPEN);
+    const [isDownloading, setIsDownloading] = useState(false);
 
     const toggleSection = useCallback((index: number) => {
         setOpenSections((prev) => {
@@ -26,6 +38,25 @@ export function CalculationTable({ name, data }: CalculationTableProps) {
             return next;
         });
     }, []);
+
+    const handleDownload = useCallback(async () => {
+        if (isDownloading) return;
+        setIsDownloading(true);
+        try {
+            const path = getGeneratePdfTableControllerGeneratePdfTableUrl(
+                id,
+            ).replace(/^\/api/, "");
+            const { data: blob } = await $api.get(path, {
+                responseType: "blob",
+            });
+            const filename = `smeta-${name.replace(/\s+/g, "-") || id}.pdf`;
+            downloadBlob(blob as Blob, filename);
+        } catch {
+            // TODO: показать уведомление об ошибке
+        } finally {
+            setIsDownloading(false);
+        }
+    }, [id, name, isDownloading]);
 
     return (
         <section className={cn(PADDING_X_CLASS)}>
@@ -56,7 +87,13 @@ export function CalculationTable({ name, data }: CalculationTableProps) {
             )}
 
             <div className="flex justify-end lg:mt-6 mob:mt-8 mt-6">
-                <Button className="uppercase">Скачать смету</Button>
+                <Button
+                    className="uppercase"
+                    onClick={handleDownload}
+                    disabled={isDownloading}
+                >
+                    {isDownloading ? "Загрузка…" : "Скачать смету"}
+                </Button>
             </div>
         </section>
     );

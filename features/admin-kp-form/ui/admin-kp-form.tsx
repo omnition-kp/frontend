@@ -12,7 +12,6 @@ import {
 import { useIMask } from "react-imask";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
-import { AxiosError } from "axios";
 
 // Компоненты
 import { AdminFormTemplate } from "@/widgets/admin-form-template";
@@ -39,8 +38,6 @@ import {
     useKpControllerFindById,
     useKpControllerUploadEstimate,
     useKpControllerUploadDocuments,
-    getKpControllerGetAllQueryKey,
-    getClientControllerGetAllQueryKey,
 } from "@/shared/queries";
 
 // Конфиги
@@ -55,7 +52,7 @@ import {
 import { onest } from "@/shared/config";
 
 // Типы
-import type { KpCreateDto, FileJson, KpDto } from "@/shared/types/server";
+import type { FileJson, KpDto } from "@/shared/types/server";
 import type {
     AdminKpFormProps,
     OptionKey,
@@ -63,6 +60,7 @@ import type {
     KpFormValues,
     DocItem,
 } from "../types";
+import { KpFormModel } from "../models/kp-form.model";
 
 export const AdminKpForm = ({ type, id, clientId }: AdminKpFormProps) => {
     const router = useRouter();
@@ -193,14 +191,36 @@ export const AdminKpForm = ({ type, id, clientId }: AdminKpFormProps) => {
                 );
             }
 
-            if (kpData.documents && kpData.documents.length > 0) {
-                const serverDocs = kpData.documents as unknown as FileJson[];
-                const loadedDocs: DocItem[] = serverDocs.map((doc, idx) => ({
-                    id: idx + 1,
-                    file: null,
-                    serverFile: doc,
-                    name: doc.name,
-                }));
+            const rawDocs =
+                kpData.documents ??
+                (kpData as { documents?: unknown }).documents ??
+                (existingKp as { data?: { documents?: unknown } })?.data
+                    ?.documents;
+            const serverDocs = Array.isArray(rawDocs) ? rawDocs : [];
+            if (serverDocs.length > 0) {
+                const loadedDocs: DocItem[] = serverDocs.map(
+                    (doc: unknown, idx: number) => {
+                        const d =
+                            doc && typeof doc === "object"
+                                ? (doc as Record<string, unknown>)
+                                : {};
+                        const filePath = String(d.filePath ?? d.path ?? "");
+                        const name = String(
+                            d.name ??
+                                d.fileName ??
+                                (filePath
+                                    ? filePath.split(/[/\\]/).pop()
+                                    : "") ??
+                                "документ",
+                        );
+                        return {
+                            id: idx + 1,
+                            file: null,
+                            serverFile: { name, filePath },
+                            name,
+                        };
+                    },
+                );
                 setDocItems(loadedDocs);
                 setNextDocId(loadedDocs.length + 1);
             }
@@ -264,169 +284,44 @@ export const AdminKpForm = ({ type, id, clientId }: AdminKpFormProps) => {
         { onAccept: (value: string) => setDateKp(value) },
     );
 
-    const parseError = (error: unknown): string => {
-        if (error instanceof AxiosError) {
-            const msg = error.response?.data?.message;
-            return Array.isArray(msg) ? msg[0] : msg || "Ошибка сервера";
-        }
-        if (error instanceof Error) {
-            return error.message;
-        }
-        return "Произошла неизвестная ошибка";
-    };
-
     // --- Submit Logic ---
     const onSubmit = async (values: KpFormValues) => {
         setServerError(null);
 
-        if (!selectedManagerId) return setServerError("Выберите менеджера");
-        if (!selectedNodeDesignId)
-            return setServerError("Выберите вариацию конструкции");
-        if (!dateKp) return setServerError("Укажите дату КП");
-        if (!estimateFile && !existingEstimateJson)
-            return setServerError("Загрузите файл сметы");
+        const model = new KpFormModel();
 
-        try {
-            // 1. Upload Estimate
-            let finalEstimate: FileJson | null = existingEstimateJson;
+        const response = await model.submit({
+            values,
+            docItems,
+            selectedManagerId: String(selectedManagerId ?? ""),
+            selectedNodeDesignId: String(selectedNodeDesignId ?? ""),
+            dateKp,
+            estimateFile,
+            existingEstimateJson,
+            paymentTerms,
+            productionConditions,
+            options,
+            clientId,
+            isUpdate,
+            kpId,
+            existingKp: (existingKp as KpDto) ?? null,
+            createKp,
+            updateKp,
+            uploadEstimate,
+            uploadDocuments,
+            queryClient,
+        });
 
-            if (estimateFile) {
-                const res = await uploadEstimate({
-                    data: { file: estimateFile },
-                });
-                const resRecord = res as {
-                    filePath?: string;
-                    data?: FileJson;
-                };
-                const uploadedData = resRecord.filePath ? res : resRecord.data;
-
-                if (uploadedData && (uploadedData as FileJson).filePath) {
-                    finalEstimate = uploadedData as FileJson;
-                    if (values.estimateName)
-                        finalEstimate.name = values.estimateName;
-                }
-            } else if (finalEstimate && values.estimateName) {
-                finalEstimate.name = values.estimateName;
-            }
-
-            if (!finalEstimate) throw new Error("Не удалось сохранить смету");
-
-            // 2. Upload Documents
-            const finalDocuments: FileJson[] = [];
-            const newFilesToUpload: File[] = [];
-            const newFilesIndices: number[] = [];
-
-            docItems.forEach((item, index) => {
-                if (item.file) {
-                    newFilesToUpload.push(item.file);
-                    newFilesIndices.push(index);
-                } else if (item.serverFile) {
-                    finalDocuments.push({
-                        ...item.serverFile,
-                        name: item.name || item.serverFile.name,
-                    });
-                }
-            });
-
-            if (newFilesToUpload.length > 0) {
-                const res = await uploadDocuments({
-                    data: { files: newFilesToUpload },
-                });
-                const uploadedDocs = Array.isArray(res)
-                    ? res
-                    : (res as { data?: FileJson[] }).data;
-
-                if (uploadedDocs && Array.isArray(uploadedDocs)) {
-                    (uploadedDocs as FileJson[]).forEach(
-                        (uploadedFile, idx) => {
-                            const originalIndex = newFilesIndices[idx];
-                            const originalItem = docItems[originalIndex];
-                            finalDocuments.push({
-                                ...uploadedFile,
-                                name: originalItem.name || uploadedFile.name,
-                            });
-                        },
-                    );
-                } else {
-                    throw new Error("Не удалось загрузить документы");
-                }
-            }
-
-            // 3. Map Options
-            const mappedOptions: Partial<KpCreateDto> = {};
-            (Object.keys(options) as OptionKey[]).forEach((key) => {
-                const dtoKey = TOGGLE_MAPPING[key];
-                (mappedOptions as Record<string, boolean>)[dtoKey] =
-                    options[key];
-            });
-
-            // 4. Payload
-            const payload: KpCreateDto = {
-                name: values.name,
-                numberKp: values.numberKp,
-                date: dateKp,
-                clientName: values.clientName,
-                numberOrder: values.numberOrder,
-                orderAddress: values.orderAddress,
-                contactPerson: values.contactPerson,
-                details: values.details || "",
-
-                estimate: finalEstimate,
-                documents: finalDocuments,
-
-                payAndDeadlines: paymentTerms
-                    .map((p) => p.value)
-                    .filter(Boolean),
-                productionConditions: productionConditions
-                    .map((p) => p.value)
-                    .filter(Boolean),
-
-                managerId: Number(selectedManagerId),
-                nodeDesignId: Number(selectedNodeDesignId),
-                clientId:
-                    Number(clientId) || (existingKp as KpDto)?.clientId || 0,
-
-                ...(mappedOptions as Partial<KpCreateDto>),
-
-                anySurface: options.anySurface,
-                advantagesOfConcrete: options.archConcreteBenefits,
-                variationsOfTheMechanism: options.mechanizationVariants,
-                grinding: options.grinding,
-                ownMobileFactory: options.mobileFactory,
-                interiorOptions: options.interiorVariants,
-                stairs: options.stairs,
-                landscaping: options.landscaping,
-                repairAndRestoration: options.repairRestoration,
-            };
-
-            if (isUpdate) {
-                const updatePayload = {
-                    ...payload,
-                    documents: finalDocuments.map((d) => d.filePath),
-                };
-                await updateKp({ id: kpId, data: updatePayload });
-            } else {
-                await createKp({ data: payload });
-            }
-
-            // !!! ИНВАЛИДАЦИЯ !!!
-            await Promise.all([
-                queryClient.invalidateQueries({
-                    queryKey: getKpControllerGetAllQueryKey(),
-                }),
-                // Добавлена инвалидация клиентов
-                queryClient.invalidateQueries({
-                    queryKey: getClientControllerGetAllQueryKey(),
-                }),
-            ]);
-
-            router.push("/admin/clients");
-        } catch (e) {
-            console.error("KP Form Error:", e);
-            setServerError(parseError(e));
+        if (!response.ok) {
+            setServerError(
+                response.message ||
+                    "Не удалось сохранить коммерческое предложение",
+            );
+            return;
         }
-    };
 
+        router.push("/admin/clients");
+    };
     const isGlobalLoading =
         createPending ||
         updatePending ||
@@ -610,8 +505,8 @@ export const AdminKpForm = ({ type, id, clientId }: AdminKpFormProps) => {
                                     topText={
                                         item.file
                                             ? `Выбран файл: ${item.file.name}`
-                                            : item.serverFile
-                                              ? `Текущий файл: ${item.serverFile.name}`
+                                            : item.serverFile?.filePath
+                                              ? `Текущий файл: ${item.name || item.serverFile.name || item.serverFile.filePath.split(/[/\\]/).pop() || "документ"}`
                                               : "Перетащите документ сюда"
                                     }
                                     onFileChange={(file) =>

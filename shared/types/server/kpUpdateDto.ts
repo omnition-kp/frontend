@@ -27,7 +27,7 @@ export interface KpUpdateDto {
     /** Смета на работы */
     estimate: FileJson;
     /** Документы КП */
-    documents: string[];
+    documents: FileJson[];
     /** Оплата и сроки работ */
     payAndDeadlines: string[];
     /** Условия для производства работ */

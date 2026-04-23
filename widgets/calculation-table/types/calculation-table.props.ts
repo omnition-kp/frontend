@@ -1,7 +1,7 @@
 import type { CalculationTableData } from "./calculation-table-data.types";
 
 export type CalculationTableProps = {
-    id: string | number;
+    id: string;
     name: string;
     date: string;
     data?: CalculationTableData;

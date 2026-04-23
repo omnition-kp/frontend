@@ -3,3 +3,5 @@ export * from "./client-folders/client-folders";
 export * from "./commercial-proposals/commercial-proposals";
 export * from "./managers/managers";
 export * from "./product-node-design-variations/product-node-design-variations";
+export * from "./get-kp/get-kp";
+export * from "./get-table-data/get-table-data";

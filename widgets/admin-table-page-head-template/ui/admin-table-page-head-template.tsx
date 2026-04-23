@@ -9,7 +9,9 @@ export const AdminTablePageHeadTemplate = ({
         <div className="flex items-center justify-between mb-7">
             <AdminHeadline title={title} />
 
-            <AdminAddButton link={link}>Добавить</AdminAddButton>
+            <AdminAddButton link={link} typeOfButton="link">
+                Добавить
+            </AdminAddButton>
         </div>
     );
 };
