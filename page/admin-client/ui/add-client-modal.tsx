@@ -33,21 +33,43 @@ export const AddClientModal = ({ isOpen, onClose }: AddClientModalProps) => {
         register,
         handleSubmit,
         reset,
+        setError,
         formState: { errors },
-    } = useForm<CreateClientFormValues>();
+    } = useForm<CreateClientFormValues>({
+        defaultValues: {
+            name: "",
+        },
+    });
 
     useEffect(() => {
         if (isOpen) {
-            reset();
+            reset({ name: "" });
         }
     }, [isOpen, reset]);
 
     // Обработчик отправки
     const onSubmit = async (values: CreateClientFormValues) => {
-        try {
-            await createClient({
-                data: { name: values.name },
+        console.log("[AddClientModal] submit values:", values);
+        const normalizedName = values.name.trim();
+        console.log("[AddClientModal] normalized name:", normalizedName);
+
+        if (!normalizedName) {
+            console.warn("[AddClientModal] blocked: empty name after trim");
+            setError("name", {
+                type: "required",
+                message: "Введите имя клиента",
             });
+            return;
+        }
+
+        try {
+            const payload = { name: normalizedName };
+            console.log("[AddClientModal] createClient payload:", payload);
+
+            const response = await createClient({
+                data: payload,
+            });
+            console.log("[AddClientModal] createClient response:", response);
 
             await queryClient.invalidateQueries({
                 queryKey: getClientControllerGetAllQueryKey(),
@@ -55,7 +77,7 @@ export const AddClientModal = ({ isOpen, onClose }: AddClientModalProps) => {
 
             onClose();
         } catch (e) {
-            console.error(e);
+            console.error("[AddClientModal] createClient error:", e);
         }
     };
 
@@ -63,7 +85,8 @@ export const AddClientModal = ({ isOpen, onClose }: AddClientModalProps) => {
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm transition-opacity">
-            <div
+            <form
+                onSubmit={handleSubmit(onSubmit)}
                 className={cn(
                     "relative w-full max-w-[540px] rounded-[12px] bg-white p-10 shadow-xl",
                     onest.className,
@@ -91,18 +114,17 @@ export const AddClientModal = ({ isOpen, onClose }: AddClientModalProps) => {
                     </div>
                 ) : null}
 
-                <form
-                    onSubmit={handleSubmit(onSubmit)}
-                    className="flex flex-col gap-8"
-                >
+                <div className="flex flex-col gap-8">
                     <div>
                         <AdminInput
                             placeholder="Имя клиента"
-                            variant="alternative" // Используем стиль как в поиске
+                            variant="alternative"
                             error={errors.name?.message}
                             disabled={isPending}
                             {...register("name", {
                                 required: "Введите имя клиента",
+                                setValueAs: (value) =>
+                                    typeof value === "string" ? value : "",
                             })}
                         />
                     </div>
@@ -131,8 +153,8 @@ export const AddClientModal = ({ isOpen, onClose }: AddClientModalProps) => {
                             {isPending ? "Сохранение..." : "Сохранить"}
                         </AdminButton>
                     </div>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
     );
 };
