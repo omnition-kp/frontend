@@ -5,6 +5,7 @@ const nextConfig: NextConfig = {
     output: "standalone",
     reactCompiler: true,
     images: {
+        unoptimized: true,
         qualities: [75, 100],
     },
 };
