@@ -127,6 +127,7 @@ export const AddClientModal = ({ isOpen, onClose }: AddClientModalProps) => {
                         <AdminButton
                             type="submit"
                             disabled={isPending}
+                            onClick={() => handleSubmit(onSubmit)}
                             className={cn(
                                 "flex h-12 items-center justify-center rounded-[6px] bg-[#333333] text-[16px] font-medium text-white transition-colors",
                                 "hover:bg-black active:scale-[0.99] disabled:opacity-50",
