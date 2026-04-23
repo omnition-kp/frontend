@@ -21,6 +21,41 @@ export const customInstance = <T>(
     urlOrConfig: string | AxiosRequestConfig,
     options?: RequestInit,
 ): Promise<T> => {
+    const requestBody = (options as RequestInit | undefined)?.body;
+    const normalizedHeaders = normalizeHeaders(
+        (options as RequestInit | undefined)?.headers,
+    );
+    const contentTypeHeader = (() => {
+        if (!normalizedHeaders) return "";
+
+        if (Array.isArray(normalizedHeaders)) {
+            const entry = normalizedHeaders.find(
+                ([key]) => key.toLowerCase() === "content-type",
+            );
+            return typeof entry?.[1] === "string" ? entry[1] : "";
+        }
+
+        const headersRecord = normalizedHeaders as Record<string, unknown>;
+        const contentType =
+            headersRecord["Content-Type"] ?? headersRecord["content-type"];
+        return typeof contentType === "string" ? contentType : "";
+    })();
+    const shouldParseJsonStringBody =
+        typeof requestBody === "string" &&
+        contentTypeHeader.toLowerCase().includes("application/json");
+
+    const parsedBody = (() => {
+        if (!shouldParseJsonStringBody) {
+            return requestBody as unknown;
+        }
+
+        try {
+            return JSON.parse(requestBody) as unknown;
+        } catch {
+            return requestBody as unknown;
+        }
+    })();
+
     const config: AxiosRequestConfig =
         typeof urlOrConfig === "string"
             ? {
@@ -28,10 +63,8 @@ export const customInstance = <T>(
                   method: (options as RequestInit | undefined)?.method as
                       | AxiosRequestConfig["method"]
                       | undefined,
-                  headers: normalizeHeaders(
-                      (options as RequestInit | undefined)?.headers,
-                  ),
-                  data: (options as RequestInit | undefined)?.body as unknown,
+                  headers: normalizedHeaders,
+                  data: parsedBody,
                   signal:
                       (options as RequestInit | undefined)?.signal ?? undefined,
               }
@@ -50,7 +83,7 @@ export const customInstance = <T>(
 
     // Для FormData сбрасываем Content-Type — axios сам выставит multipart/form-data с boundary.
     // Иначе дефолтный application/json от $apiAdmin ломает загрузку файлов (бэк видит files пустым).
-    const body = (options as RequestInit | undefined)?.body;
+    const body = requestBody;
     if (body instanceof FormData) {
         config.headers = {
             ...(config.headers as Record<string, unknown>),

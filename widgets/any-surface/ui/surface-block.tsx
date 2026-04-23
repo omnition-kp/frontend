@@ -14,6 +14,7 @@ export const SurfaceBlock = ({ title, photo, data }: SurfaceBlockProps) => {
                     height={538}
                     draggable={false}
                     quality={100}
+                    unoptimized
                     sizes="648px 538px"
                     className="w-full h-full object-cover max-h-[356px]"
                 />
