@@ -44,13 +44,9 @@ export const AddClientModal = ({ isOpen, onClose }: AddClientModalProps) => {
 
     // Обработчик отправки
     const onSubmit = async (values: CreateClientFormValues) => {
-        const name = values.name?.trim();
-
-        if (!name) return;
-
         try {
             await createClient({
-                data: { name },
+                data: { name: values.name },
             });
 
             await queryClient.invalidateQueries({
