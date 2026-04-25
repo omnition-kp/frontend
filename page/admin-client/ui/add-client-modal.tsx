@@ -44,12 +44,9 @@ export const AddClientModal = ({ isOpen, onClose }: AddClientModalProps) => {
 
     // Обработчик отправки
     const onSubmit = async (values: CreateClientFormValues) => {
-        console.log("[AddClientModal] submit values:", values);
         const normalizedName = values.name.trim();
-        console.log("[AddClientModal] normalized name:", normalizedName);
 
         if (!normalizedName) {
-            console.warn("[AddClientModal] blocked: empty name after trim");
             setError("name", {
                 type: "required",
                 message: "Введите имя клиента",
@@ -59,12 +56,10 @@ export const AddClientModal = ({ isOpen, onClose }: AddClientModalProps) => {
 
         try {
             const payload = { name: normalizedName };
-            console.log("[AddClientModal] createClient payload:", payload);
 
-            const response = await createClient({
+            await createClient({
                 data: payload,
             });
-            console.log("[AddClientModal] createClient response:", response);
 
             await queryClient.invalidateQueries({
                 queryKey: getClientControllerGetAllQueryKey(),
@@ -72,7 +67,7 @@ export const AddClientModal = ({ isOpen, onClose }: AddClientModalProps) => {
 
             onClose();
         } catch (e) {
-            console.error("[AddClientModal] createClient error:", e);
+            console.error(e);
         }
     };
 

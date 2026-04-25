@@ -15,6 +15,7 @@ export const ClientFolderRow = ({
     searchValue,
 }: ClientFolderRowProps) => {
     const router = useRouter();
+    const canToggle = folder.offers.length > 0;
 
     return (
         <div className="bg-[#F2F2F2]">
@@ -25,12 +26,24 @@ export const ClientFolderRow = ({
                     "px-5 py-4 text-[18px] leading-[112%]",
                 )}
             >
-                <p>{folder.numberLabel}</p>
-                <AdminHighlightedText
-                    text={folder.name}
-                    highlight={searchValue}
-                />
-                <p>{folder.cpCount} КП</p>
+                <button
+                    type="button"
+                    onClick={() => canToggle && onToggle(folder.id)}
+                    className={cn(
+                        "col-span-3 grid grid-cols-[72px_1fr_180px] items-center text-left",
+                        canToggle ? "cursor-pointer" : "cursor-default",
+                    )}
+                    aria-label={
+                        isOpened ? "Свернуть папку" : "Развернуть папку"
+                    }
+                >
+                    <p>{folder.numberLabel}</p>
+                    <AdminHighlightedText
+                        text={folder.name}
+                        highlight={searchValue}
+                    />
+                    <p>{folder.cpCount} КП</p>
+                </button>
 
                 <div className="flex items-center justify-between gap-3">
                     <button
@@ -48,7 +61,7 @@ export const ClientFolderRow = ({
                         onClick={() => onToggle(folder.id)}
                         className={cn(
                             "text-[#4C4C4C] transition-colors",
-                            folder.offers.length === 0
+                            !canToggle
                                 ? "cursor-default opacity-0 pointer-events-none"
                                 : "hover:text-black cursor-pointer",
                         )}

@@ -44,23 +44,23 @@ export const DynamicSection = ({
                             placeholder="Описание"
                             variant="alternative"
                             maxLength={maxLength}
-                            // Добавляем паддинг справа, чтобы текст не наезжал на иконку и счетчик
-                            className="pr-[40px] pb-5"
+                            // Оставляем место справа под иконку/счетчик
+                            className="pr-[40px]"
                         />
 
-                        {/* Кнопка удаления (появляется внутри инпута) */}
-                        <button
-                            type="button"
-                            onClick={() => handleRemove(item.id)}
-                            className="absolute top-3 right-3 text-black/20 hover:text-red-500 transition-colors cursor-pointer"
-                            title="Удалить"
-                        >
-                            <Trash2 width={16} height={16} />
-                        </button>
-
-                        {/* Счетчик символов */}
-                        <div className="absolute bottom-1 right-3 text-[10px] text-black/30 select-none">
-                            {item.value.length}/{maxLength}
+                        {/* Правый блок: иконка и счетчик центрируются по высоте контейнера */}
+                        <div className="absolute inset-y-0 right-3 flex flex-col items-center justify-center gap-1">
+                            <button
+                                type="button"
+                                onClick={() => handleRemove(item.id)}
+                                className="text-black/20 hover:text-red-500 transition-colors cursor-pointer"
+                                title="Удалить"
+                            >
+                                <Trash2 width={16} height={16} />
+                            </button>
+                            <div className="text-[10px] leading-none text-black/30 select-none">
+                                {item.value.length}/{maxLength}
+                            </div>
                         </div>
                     </div>
                 ))}

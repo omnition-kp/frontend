@@ -11,6 +11,7 @@ export const AdminFormTemplate = ({
     children,
     title,
     onCancel,
+    cancelButtonText = "Отмена",
     onSuccess,
     loading,
     dataLoading,
@@ -28,11 +29,11 @@ export const AdminFormTemplate = ({
                     <div className="grid grid-cols-2 gap-2">
                         <AdminButton
                             variant="secondary"
-                            className={BUTTON_CLASS}
+                            className={`${BUTTON_CLASS} w-auto min-w-[150px] px-4 whitespace-nowrap`}
                             onClick={onCancel}
                             disabled={loading}
                         >
-                            Отмена
+                            {cancelButtonText}
                         </AdminButton>
 
                         <AdminButton

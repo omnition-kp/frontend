@@ -12,6 +12,7 @@ import {
 import { useIMask } from "react-imask";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 // Компоненты
 import { AdminFormTemplate } from "@/widgets/admin-form-template";
@@ -322,6 +323,15 @@ export const AdminKpForm = ({ type, id, clientId }: AdminKpFormProps) => {
 
         router.push("/admin/clients");
     };
+    const existingKpName = (existingKp as KpDto | undefined)?.name?.trim();
+    const handleCancelAction = () => {
+        if (!isUpdate || !id) {
+            router.back();
+            return;
+        }
+        navigator.clipboard.writeText(`${window.location.origin}/${id}`);
+        toast.success("Ссылка скопирована в буфер обмена");
+    };
     const isGlobalLoading =
         createPending ||
         updatePending ||
@@ -334,8 +344,13 @@ export const AdminKpForm = ({ type, id, clientId }: AdminKpFormProps) => {
             <ClientLeftPanel />
 
             <AdminFormTemplate
-                title={isUpdate ? `Редактирование КП #${id}` : "Создание КП"}
-                onCancel={() => router.back()}
+                title={
+                    isUpdate
+                        ? existingKpName || "Редактирование КП"
+                        : "Создание КП"
+                }
+                onCancel={handleCancelAction}
+                cancelButtonText={isUpdate ? "Скопировать ссылку" : "Отмена"}
                 onSuccess={handleSubmit(onSubmit)}
                 loading={isGlobalLoading}
                 dataLoading={isUpdate && kpLoading}
