@@ -23,10 +23,10 @@ export const AdminFormTemplate = ({
     return (
         <AdminFormCard>
             <div>
-                <div className="mb-9 flex items-center justify-between">
+                <div className="mb-9 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
                     <AdminHeadlineForm title={title} />
 
-                    <div className="grid grid-cols-2 gap-2">
+                    <div className="flex items-center gap-2 self-start md:self-auto">
                         <AdminButton
                             variant="secondary"
                             className={`${BUTTON_CLASS} w-auto min-w-[150px] px-4 whitespace-nowrap`}

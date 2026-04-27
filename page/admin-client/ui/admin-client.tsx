@@ -57,10 +57,19 @@ export const AdminClient = () => {
                             cpCount: folder.kps?.length ?? 0,
                             offers:
                                 folder.kps?.map((kp) => {
+                                    const kpHref = (
+                                        kp as unknown as { href?: unknown }
+                                    ).href;
+                                    const href =
+                                        typeof kpHref === "string"
+                                            ? kpHref
+                                            : kp.id.toString();
+
                                     return {
                                         id: kp.id.toString(),
                                         title: kp.name,
                                         numberKp: kp.numberKp,
+                                        href,
                                     };
                                 }) ?? [],
                         };

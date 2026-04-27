@@ -17,6 +17,7 @@ export * from "./calculationTableSectionDto";
 export * from "./clientDto";
 export * from "./createClientDto";
 export * from "./fileJson";
+export * from "./getDocumentControllerGetDocumentParams";
 export * from "./kpControllerUploadDocumentsBody";
 export * from "./kpControllerUploadEstimateBody";
 export * from "./kpCreateDto";

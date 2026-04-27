@@ -21,6 +21,7 @@ export const ClientOfferRow = ({
     searchValue,
     numberKp,
     id,
+    href,
     clientId,
 }: ClientOfferRowProps) => {
     const router = useRouter();
@@ -31,8 +32,11 @@ export const ClientOfferRow = ({
     const { mutateAsync: deleteKp, isPending: isDeletePending } =
         useKpControllerDelete();
 
-    const handleCopy = (id: string) => {
-        navigator.clipboard.writeText(`${window.location.origin}/${id}`);
+    const handleCopy = (href: string) => {
+        const normalizedHref = href.replace(/^\/+/, "");
+        navigator.clipboard.writeText(
+            `${window.location.origin}/${normalizedHref}`,
+        );
         toast.success("Ссылка скопирована в буфер обмена");
         setIsCopied(true);
     };
@@ -95,7 +99,7 @@ export const ClientOfferRow = ({
                         <button
                             type="button"
                             className="hover:text-black transition-colors cursor-pointer relative flex items-center justify-center w-[16px] h-[16px]"
-                            onClick={() => handleCopy(id)}
+                            onClick={() => handleCopy(href)}
                             disabled={isCopied}
                         >
                             <AnimatePresence mode="wait" initial={false}>

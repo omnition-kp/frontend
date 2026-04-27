@@ -2,6 +2,7 @@ export interface ClientOffer {
     id: string;
     title: string;
     numberKp: number | string;
+    href: string;
 }
 
 export interface ClientFolder {

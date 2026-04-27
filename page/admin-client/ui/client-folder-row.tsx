@@ -143,6 +143,7 @@ export const ClientFolderRow = ({
                             searchValue={searchValue}
                             numberKp={offer.numberKp.toString()}
                             id={offer.id}
+                            href={offer.href}
                             clientId={folder.id}
                         />
                     ))}
