@@ -74,7 +74,7 @@ export const ClientFolderRow = ({
                         <button
                             type="button"
                             onClick={() => onDelete(folder)}
-                            className="text-[#D00707] transition-opacity hover:opacity-80 cursor-pointer"
+                            className="w-7 h-7 rounded-[4px] border border-[#E4E4E4] text-[#D00707] transition-colors flex items-center justify-center hover:border-[#D8D8D8] hover:bg-white/60 cursor-pointer"
                             aria-label={`Удалить клиента ${folder.name}`}
                         >
                             <svg
