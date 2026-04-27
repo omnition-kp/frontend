@@ -4,7 +4,6 @@ import { AxiosError } from "axios";
 import { useMemo, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import {
-    AdminError,
     AdminHighlightedText,
     AdminInput,
     AdminLoading,
@@ -30,7 +29,9 @@ export const AdminManager = () => {
     const router = useRouter();
     const queryClient = useQueryClient();
     const [searchValue, setSearchValue] = useState("");
-    const [serverError, setServerError] = useState<string | null>(null);
+    const [deleteModalError, setDeleteModalError] = useState<string | null>(
+        null,
+    );
     const [managerToDelete, setManagerToDelete] = useState<ManagerDto | null>(
         null,
     );
@@ -85,7 +86,7 @@ export const AdminManager = () => {
     const handleDeleteConfirm = async () => {
         if (!managerToDelete) return;
 
-        setServerError(null);
+        setDeleteModalError(null);
 
         try {
             await deleteManager({ id: managerToDelete.id });
@@ -104,9 +105,10 @@ export const AdminManager = () => {
                 queryKey: getManagerControllerGetAllQueryKey(),
             });
 
+            setDeleteModalError(null);
             setManagerToDelete(null);
         } catch (error) {
-            setServerError(parseError(error));
+            setDeleteModalError(parseError(error));
         }
     };
 
@@ -143,8 +145,6 @@ export const AdminManager = () => {
                     variant="alternative"
                 />
             </div>
-
-            {serverError && <AdminError error={serverError} />}
 
             <AdminTable
                 columns={ADMIN_MANAGER_COLUMNS}
@@ -219,6 +219,12 @@ export const AdminManager = () => {
                             {`«${managerToDelete.name}»?`}
                         </p>
 
+                        {deleteModalError && (
+                            <p className="mb-4 rounded-[4px] border border-[#FFCDCD] bg-[#FFF1F1] px-3 py-2 text-left text-[14px] leading-[120%] text-[#C80000]">
+                                {deleteModalError}
+                            </p>
+                        )}
+
                         <div className="flex items-center justify-center gap-2">
                             <button
                                 type="button"
@@ -231,7 +237,10 @@ export const AdminManager = () => {
 
                             <button
                                 type="button"
-                                onClick={() => setManagerToDelete(null)}
+                                onClick={() => {
+                                    setDeleteModalError(null);
+                                    setManagerToDelete(null);
+                                }}
                                 disabled={isDeletePending}
                                 className="rounded-[4px] border border-[#E4E4E4] px-8 py-2 text-[16px] leading-[100%] text-[#4C4C4C] transition-colors hover:bg-[#F7F7F7] disabled:cursor-not-allowed disabled:opacity-60"
                             >

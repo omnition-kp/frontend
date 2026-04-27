@@ -4,7 +4,6 @@ import { AxiosError } from "axios";
 import { useMemo, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import {
-    AdminError,
     AdminHighlightedText,
     AdminInput,
     AdminLoading,
@@ -30,7 +29,9 @@ export const AdminNodeDesign = () => {
     const router = useRouter();
     const queryClient = useQueryClient();
     const [searchValue, setSearchValue] = useState("");
-    const [serverError, setServerError] = useState<string | null>(null);
+    const [deleteModalError, setDeleteModalError] = useState<string | null>(
+        null,
+    );
     const [nodeToDelete, setNodeToDelete] = useState<NodeDesignDto | null>(
         null,
     );
@@ -85,7 +86,7 @@ export const AdminNodeDesign = () => {
             return;
         }
 
-        setServerError(null);
+        setDeleteModalError(null);
 
         try {
             await deleteNodeDesign({ id: nodeToDelete.id });
@@ -104,9 +105,10 @@ export const AdminNodeDesign = () => {
                 queryKey: getNodeDesignControllerGetAllQueryKey(),
             });
 
+            setDeleteModalError(null);
             setNodeToDelete(null);
         } catch (error) {
-            setServerError(parseError(error));
+            setDeleteModalError(parseError(error));
         }
     };
 
@@ -142,8 +144,6 @@ export const AdminNodeDesign = () => {
                     variant="alternative"
                 />
             </div>
-
-            {serverError && <AdminError error={serverError} />}
 
             <AdminTable
                 columns={ADMIN_NODE_DESIGN_COLUMNS}
@@ -210,6 +210,12 @@ export const AdminNodeDesign = () => {
                             {`«${nodeToDelete.name}»?`}
                         </p>
 
+                        {deleteModalError && (
+                            <p className="mb-4 rounded-[4px] border border-[#FFCDCD] bg-[#FFF1F1] px-3 py-2 text-left text-[14px] leading-[120%] text-[#C80000]">
+                                {deleteModalError}
+                            </p>
+                        )}
+
                         <div className="flex items-center justify-center gap-2">
                             <button
                                 type="button"
@@ -222,7 +228,10 @@ export const AdminNodeDesign = () => {
 
                             <button
                                 type="button"
-                                onClick={() => setNodeToDelete(null)}
+                                onClick={() => {
+                                    setDeleteModalError(null);
+                                    setNodeToDelete(null);
+                                }}
                                 disabled={isDeletePending}
                                 className="rounded-[4px] border border-[#E4E4E4] px-8 py-2 text-[16px] leading-[100%] text-[#4C4C4C] transition-colors hover:bg-[#F7F7F7] disabled:cursor-not-allowed disabled:opacity-60"
                             >

@@ -16,3 +16,4 @@ export * from "./admin-form-group";
 export * from "./admin-loading";
 export * from "./admin-upload-dropzone";
 export * from "./admin-big-toggle";
+export * from "./admin-confirm-modal";

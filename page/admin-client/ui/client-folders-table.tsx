@@ -10,6 +10,8 @@ export const ClientFoldersTable = ({
     onToggleFolder,
     isLoading,
     searchValue,
+    isEditing,
+    onDeleteFolder,
 }: ClientFoldersTableProps) => {
     const trimmedSearch = searchValue.trim();
 
@@ -22,8 +24,17 @@ export const ClientFoldersTable = ({
                     "text-[14px] leading-[112%] text-gray",
                 )}
             >
-                {TABLE_HEADERS.map((header) => (
-                    <p key={header}>{header}</p>
+                {TABLE_HEADERS.map((header, index) => (
+                    <p
+                        key={header}
+                        className={
+                            index === TABLE_HEADERS.length - 1
+                                ? "justify-self-end text-right"
+                                : undefined
+                        }
+                    >
+                        {header}
+                    </p>
                 ))}
             </div>
 
@@ -47,6 +58,8 @@ export const ClientFoldersTable = ({
                               isOpened={openedFolderId === folder.id}
                               onToggle={onToggleFolder}
                               searchValue={searchValue}
+                              isEditing={isEditing}
+                              onDelete={onDeleteFolder}
                           />
                       ))}
             </div>

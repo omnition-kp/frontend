@@ -5,4 +5,6 @@ export interface ClientFolderRowProps {
     isOpened: boolean;
     onToggle: (folderId: string) => void;
     searchValue: string;
+    isEditing: boolean;
+    onDelete: (folder: ClientFolder) => void;
 }

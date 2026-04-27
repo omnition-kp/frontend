@@ -6,4 +6,6 @@ export interface ClientFoldersTableProps {
     onToggleFolder: (folderId: string) => void;
     isLoading: boolean;
     searchValue: string;
+    isEditing: boolean;
+    onDeleteFolder: (folder: ClientFolder) => void;
 }
