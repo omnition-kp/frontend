@@ -100,9 +100,11 @@ export const Kp = ({ id }: KpProps) => {
             <MobileFactory visible={kpData.ownMobileFactory} />
             <InteriorOptions visible={kpData.interiorOptions} />
             <Stairs visible={kpData.stairs} />
-            <div className="mt-5 lg:mt-0">
-                <Landscaping visible={kpData.landscaping} />
-            </div>
+            {kpData.landscaping && (
+                <div className="mt-5 lg:mt-0">
+                    <Landscaping visible={kpData.landscaping} />
+                </div>
+            )}
             <RepairAndRestoration visible={kpData.repairAndRestoration} />
             <Footer />
         </main>
